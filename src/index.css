@@ -103,8 +103,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   );
 }
 
-/* Print Stylesheet for Pristine Invitation Card PDF / Printing */
+/* Print Stylesheet for Pristine Full-Color Invitation Card PDF / Printing */
 @media print {
+  @page {
+    margin: 1cm;
+    size: auto;
+  }
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  body {
+    background: transparent !important;
+  }
   body * {
     visibility: hidden;
   }
@@ -117,13 +129,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 50%;
     transform: translate(-50%, -50%);
     width: 90% !important;
-    max-width: 600px !important;
-    background: #0f1015 !important;
-    color: #f7f6f2 !important;
-    border: 2px solid #d4af37 !important;
+    max-width: 650px !important;
     box-shadow: none !important;
     padding: 32px !important;
-    border-radius: 20px !important;
+    border-radius: 24px !important;
     page-break-inside: avoid;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 }

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toPng } from "html-to-image";
 import type { EventPlan, EventType } from "../types";
 import {
   X,
@@ -13,7 +14,9 @@ import {
   Crown,
   Leaf,
   Moon,
-  Compass,
+  Flame,
+  Wine,
+  Image as ImageIcon,
 } from "lucide-react";
 
 interface Props {
@@ -22,78 +25,115 @@ interface Props {
   onClose: () => void;
 }
 
-export type CardDesignStyle = "royal" | "botanical" | "minimal" | "celestial";
+export type CardColorTheme = "royalGold" | "rubyGold" | "emerald" | "sapphire" | "saffron";
 
-interface CardDesignPreset {
-  id: CardDesignStyle;
+interface ColorThemeConfig {
+  id: CardColorTheme;
   name: string;
   icon: typeof Crown;
   badge: string;
-  bgGradient: string;
-  borderStyle: string;
+  bgStyle: {
+    background: string;
+    backgroundColor: string;
+  };
+  outerBorder: string;
   innerBorder: string;
-  accentText: string;
+  accentColor: string;
+  titleColor: string;
+  textColor: string;
+  cornerColor: string;
   dividerIcon: typeof Award;
-  cornerStyle: string;
-  fontClass: string;
 }
 
-const CARD_DESIGN_PRESETS: Record<CardDesignStyle, CardDesignPreset> = {
-  royal: {
-    id: "royal",
-    name: "Royal Heritage",
+const COLOR_THEMES: Record<CardColorTheme, ColorThemeConfig> = {
+  royalGold: {
+    id: "royalGold",
+    name: "Imperial Gold",
     icon: Crown,
-    badge: "border-[#d4af37]/40 text-[#f3e8c8] bg-[#d4af37]/10",
-    bgGradient: "bg-gradient-to-b from-[#1c1d25] via-[#14151c] to-[#0d0e12]",
-    borderStyle: "border-2 border-[#d4af37]/70 shadow-[0_0_40px_rgba(212,175,55,0.18)]",
-    innerBorder: "border border-[#d4af37]/35",
-    accentText: "text-[#d4af37]",
-    dividerIcon: Award,
-    cornerStyle: "text-[#d4af37]/60",
-    fontClass: "font-editorial",
+    badge: "border-amber-400/50 text-amber-200 bg-amber-500/15",
+    bgStyle: {
+      backgroundColor: "#16130b",
+      background: "radial-gradient(circle at 50% 20%, #2a2211 0%, #17130c 55%, #0c0a06 100%)",
+    },
+    outerBorder: "border-2 border-[#e5c158] shadow-[0_0_50px_rgba(229,193,88,0.25)]",
+    innerBorder: "border border-[#e5c158]/50",
+    accentColor: "#e5c158",
+    titleColor: "text-amber-100",
+    textColor: "#fef3c7",
+    cornerColor: "#e5c158",
+    dividerIcon: Crown,
   },
-  botanical: {
-    id: "botanical",
-    name: "Botanical Romance",
+  rubyGold: {
+    id: "rubyGold",
+    name: "Royal Ruby",
+    icon: Wine,
+    badge: "border-rose-400/50 text-rose-200 bg-rose-500/15",
+    bgStyle: {
+      backgroundColor: "#220811",
+      background: "radial-gradient(circle at 50% 20%, #3d0c1e 0%, #220811 55%, #120308 100%)",
+    },
+    outerBorder: "border-2 border-[#f43f5e] shadow-[0_0_50px_rgba(244,63,94,0.25)]",
+    innerBorder: "border border-[#fde047]/60",
+    accentColor: "#ffd700",
+    titleColor: "text-rose-100",
+    textColor: "#ffe4e6",
+    cornerColor: "#ffd700",
+    dividerIcon: Wine,
+  },
+  emerald: {
+    id: "emerald",
+    name: "Emerald Royale",
     icon: Leaf,
-    badge: "border-emerald-500/40 text-emerald-200 bg-emerald-500/10",
-    bgGradient: "bg-gradient-to-b from-[#161a17] via-[#111412] to-[#0c0e0c]",
-    borderStyle: "border-2 border-emerald-500/50 shadow-[0_0_40px_rgba(16,185,129,0.15)]",
-    innerBorder: "border border-emerald-400/30 border-dashed",
-    accentText: "text-emerald-300",
+    badge: "border-emerald-400/50 text-emerald-200 bg-emerald-500/15",
+    bgStyle: {
+      backgroundColor: "#062217",
+      background: "radial-gradient(circle at 50% 20%, #0d3d2a 0%, #062217 55%, #02120c 100%)",
+    },
+    outerBorder: "border-2 border-[#10b981] shadow-[0_0_50px_rgba(16,185,129,0.25)]",
+    innerBorder: "border border-[#34d399]/50 border-dashed",
+    accentColor: "#34d399",
+    titleColor: "text-emerald-100",
+    textColor: "#d1fae5",
+    cornerColor: "#34d399",
     dividerIcon: Leaf,
-    cornerStyle: "text-emerald-400/60",
-    fontClass: "font-editorial",
   },
-  minimal: {
-    id: "minimal",
-    name: "Luxe Minimalist",
-    icon: Compass,
-    badge: "border-stone-400/40 text-stone-200 bg-stone-500/10",
-    bgGradient: "bg-gradient-to-b from-[#18181b] via-[#121215] to-[#0a0a0c]",
-    borderStyle: "border border-stone-200/40 shadow-[0_0_35px_rgba(255,255,255,0.06)]",
-    innerBorder: "border border-stone-700/50",
-    accentText: "text-stone-300",
-    dividerIcon: Compass,
-    cornerStyle: "text-stone-500",
-    fontClass: "font-cinzel",
-  },
-  celestial: {
-    id: "celestial",
-    name: "Midnight Celestial",
+  sapphire: {
+    id: "sapphire",
+    name: "Royal Sapphire",
     icon: Moon,
-    badge: "border-cyan-400/40 text-cyan-200 bg-cyan-500/10",
-    bgGradient: "bg-gradient-to-b from-[#0f172a] via-[#090d16] to-[#05070a]",
-    borderStyle: "border-2 border-cyan-400/60 shadow-[0_0_45px_rgba(6,182,212,0.2)]",
-    innerBorder: "border border-cyan-300/30",
-    accentText: "text-cyan-300",
+    badge: "border-cyan-400/50 text-cyan-200 bg-cyan-500/15",
+    bgStyle: {
+      backgroundColor: "#0c1b33",
+      background: "radial-gradient(circle at 50% 20%, #152d54 0%, #0c1b33 55%, #050d1a 100%)",
+    },
+    outerBorder: "border-2 border-[#38bdf8] shadow-[0_0_50px_rgba(56,189,248,0.25)]",
+    innerBorder: "border border-[#38bdf8]/50",
+    accentColor: "#38bdf8",
+    titleColor: "text-cyan-100",
+    textColor: "#e0f2fe",
+    cornerColor: "#38bdf8",
     dividerIcon: Moon,
-    cornerStyle: "text-cyan-400/70",
-    fontClass: "font-editorial",
+  },
+  saffron: {
+    id: "saffron",
+    name: "Saffron Utsav",
+    icon: Flame,
+    badge: "border-orange-400/50 text-orange-200 bg-orange-500/15",
+    bgStyle: {
+      backgroundColor: "#2c1206",
+      background: "radial-gradient(circle at 50% 20%, #4a210b 0%, #2c1206 55%, #160802 100%)",
+    },
+    outerBorder: "border-2 border-[#f59e0b] shadow-[0_0_50px_rgba(245,158,11,0.25)]",
+    innerBorder: "border border-[#fbbf24]/50",
+    accentColor: "#f59e0b",
+    titleColor: "text-amber-100",
+    textColor: "#fef3c7",
+    cornerColor: "#f59e0b",
+    dividerIcon: Flame,
   },
 };
 
-// Formats date into formal written English
+// Formats a date into formal written English
 function formatFormalDate(dateStr: string): string {
   try {
     const d = new Date(dateStr);
@@ -110,8 +150,10 @@ function formatFormalDate(dateStr: string): string {
 }
 
 export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
-  const [selectedDesign, setSelectedDesign] = useState<CardDesignStyle>("royal");
+  const [selectedColor, setSelectedColor] = useState<CardColorTheme>("royalGold");
   const [copiedText, setCopiedText] = useState(false);
+  const [isExportingImage, setIsExportingImage] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const { formData } = plan;
 
@@ -119,22 +161,22 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
 
   const formalDate = formatFormalDate(formData.eventDate);
   const venueLocation = formData.venue || "The Grand Celebration Ballroom";
-  const activePreset = CARD_DESIGN_PRESETS[selectedDesign];
-  const DividerIcon = activePreset.dividerIcon;
+  const activeTheme = COLOR_THEMES[selectedColor];
+  const DividerIcon = activeTheme.dividerIcon;
 
-  // Event wording tailored to domain
-  const getEventCopy = (type: EventType) => {
+  // Domain wording tailored to EventType
+  const getEventWording = (type: EventType) => {
     switch (type) {
       case "Wedding":
         return {
-          flourish: "⚜️ SAVE THE DATE ⚜️",
+          headerFlourish: "⚜️ SAVE THE DATE ⚜️",
           subtitle: "Together with their families, cordially invite you to celebrate the marriage of",
-          dressCode: "Royal & Elegant Traditional Attire",
-          footerText: "Dinner, Dancing & Celebrations to Follow • Formal RSVP Requested",
+          dressCode: "Royal Traditional Attire",
+          footerText: "Dinner, Dancing & Celebrations to Follow • RSVP Requested",
         };
       case "Birthday":
         return {
-          flourish: "✨ A MILESTONE CELEBRATION ✨",
+          headerFlourish: "✨ A MILESTONE CELEBRATION ✨",
           subtitle: "You are joyfully invited to an unforgettable evening honoring",
           dressCode: "Cocktail Chic & Festive Glamour",
           footerText: "Join us for champagne cocktails, gourmet dining, and late-night music",
@@ -142,14 +184,14 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
       case "Corporate Gala":
       case "Tech Conference":
         return {
-          flourish: "🏛️ OFFICIAL EXECUTIVE INVITATION 🏛️",
+          headerFlourish: "🏛️ OFFICIAL EXECUTIVE INVITATION 🏛️",
           subtitle: "You are cordially requested to attend the executive annual assembly of",
           dressCode: "Black Tie / Formal Business Attire",
           footerText: "Keynote Addresses, Networking Soirée & Awards Banquet",
         };
       case "College Fest":
         return {
-          flourish: "⚡ OFFICIAL FESTIVAL ACCESS PASS ⚡",
+          headerFlourish: "⚡ OFFICIAL FESTIVAL ACCESS PASS ⚡",
           subtitle: "Get ready for the biggest celebration of the semester at",
           dressCode: "Festival Chic & Casual Attire",
           footerText: "Live Bands, Cultural Showcases, Food Stalls & DJ Afterparty",
@@ -157,7 +199,7 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
       case "Anniversary":
       default:
         return {
-          flourish: "🥂 A LIFETIME OF MEMORIES 🥂",
+          headerFlourish: "🥂 A LIFETIME OF MEMORIES 🥂",
           subtitle: "Warmly invite you to share in an evening of joy celebrating",
           dressCode: "Cocktail / Festive Formal",
           footerText: "Toast to love, laughter and cherished moments together",
@@ -165,10 +207,10 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
     }
   };
 
-  const copy = getEventCopy(formData.eventType);
+  const wording = getEventWording(formData.eventType);
 
   // Digital text invitation for WhatsApp / SMS / Email
-  const digitalInviteText = `✨ You're Invited! ✨\n\n${copy.flourish}\n\n${copy.subtitle}\n🎉 *${formData.eventName}*\n\n📅 Date: ${formalDate}\n📍 Venue: ${venueLocation}\n🎭 Theme: ${formData.theme}\n👔 Dress Code: ${copy.dressCode}\n\n${copy.footerText}\n\nOrchestrated with CelebrateAI. We look forward to celebrating with you!`;
+  const digitalInviteText = `✨ You're Invited! ✨\n\n${wording.headerFlourish}\n\n${wording.subtitle}\n🎉 *${formData.eventName}*\n\n📅 Date: ${formalDate}\n📍 Venue: ${venueLocation}\n🎭 Theme: ${formData.theme}\n👔 Dress Code: ${wording.dressCode}\n\n${wording.footerText}\n\nOrchestrated with CelebrateAI. We look forward to celebrating with you!`;
 
   const handleCopyText = async () => {
     try {
@@ -180,19 +222,42 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
     }
   };
 
+  // High-Resolution Full-Color Image Export (PNG)
+  const handleDownloadImage = async () => {
+    if (!cardRef.current) return;
+    try {
+      setIsExportingImage(true);
+      // Generate clean high-resolution canvas image
+      const dataUrl = await toPng(cardRef.current, {
+        quality: 1.0,
+        pixelRatio: 2.5,
+        cacheBust: true,
+      });
+
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = `${formData.eventName.replace(/\s+/g, "_")}_Invitation_Card.png`;
+      a.click();
+    } catch (err) {
+      console.error("Failed to export image:", err);
+    } finally {
+      setIsExportingImage(false);
+    }
+  };
+
   const handlePrint = () => {
     window.print();
   };
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.94, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.94, y: 16 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="relative w-full max-w-2xl bg-[#0f1015] border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl my-8 text-stone-100"
+          className="relative w-full max-w-2xl bg-[#0f1015] border border-amber-500/30 rounded-3xl p-5 sm:p-8 shadow-2xl my-6 text-stone-100"
           role="dialog"
           aria-modal="true"
           aria-labelledby="invitation-card-title"
@@ -201,7 +266,7 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
           <button
             onClick={onClose}
             aria-label="Close invitation modal"
-            className="absolute top-5 right-5 p-2 rounded-full bg-white/5 hover:bg-white/10 text-stone-400 hover:text-white transition-colors cursor-pointer"
+            className="absolute top-5 right-5 p-2 rounded-full bg-white/5 hover:bg-white/10 text-stone-400 hover:text-white transition-colors cursor-pointer z-10"
           >
             <X className="w-5 h-5" />
           </button>
@@ -210,139 +275,195 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
           <div className="text-center mb-5">
             <span className="text-[11px] font-bold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/25 px-3 py-1 rounded-full inline-flex items-center gap-1.5 mb-2">
               <Sparkles className="w-3.5 h-3.5" />
-              Bespoke Invitation Card Studio
+              Full-Color Bespoke Invitation Studio
             </span>
             <h2 id="invitation-card-title" className="text-2xl font-editorial font-bold text-white tracking-tight">
-              Your Tailored Event Invitation
+              Your Colored Event Invitation
             </h2>
-            <p className="text-xs text-stone-400 mt-1">
-              Select your favorite card design style, print high-res, or share directly
+            <p className="text-xs text-stone-400 mt-0.5">
+              Select rich celebration colors and export directly in high resolution
             </p>
           </div>
 
           {/* ═══════════════════════════════════════════════════════════════
-              CARD DESIGN PRESET SELECTOR
+              VIBRANT COLOR PALETTE SELECTOR
               ═══════════════════════════════════════════════════════════════ */}
-          <div className="mb-5 flex items-center justify-center gap-2 flex-wrap">
-            <span className="text-xs text-stone-400 font-medium mr-1 hidden sm:inline">Design Style:</span>
-            {(Object.keys(CARD_DESIGN_PRESETS) as CardDesignStyle[]).map((styleKey) => {
-              const preset = CARD_DESIGN_PRESETS[styleKey];
-              const Icon = preset.icon;
-              const isSelected = selectedDesign === styleKey;
+          <div className="mb-5 flex items-center justify-center gap-2 flex-wrap" role="region" aria-label="Color palette selector">
+            <span className="text-xs text-stone-300 font-semibold mr-1 hidden sm:inline">Color Theme:</span>
+            {(Object.keys(COLOR_THEMES) as CardColorTheme[]).map((themeKey) => {
+              const theme = COLOR_THEMES[themeKey];
+              const Icon = theme.icon;
+              const isSelected = selectedColor === themeKey;
 
               return (
                 <button
-                  key={styleKey}
+                  key={themeKey}
                   type="button"
-                  onClick={() => setSelectedDesign(styleKey)}
+                  onClick={() => setSelectedColor(themeKey)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     isSelected
-                      ? `${preset.badge} border shadow-md ring-1 ring-white/20 scale-102`
+                      ? `${theme.badge} border shadow-lg ring-2 ring-white/25 scale-105`
                       : "bg-white/5 text-stone-400 border border-white/10 hover:border-white/20 hover:text-white"
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
-                  <span>{preset.name}</span>
+                  <span>{theme.name}</span>
                 </button>
               );
             })}
           </div>
 
           {/* ═══════════════════════════════════════════════════════════════
-              THE PRINTABLE LUXURY INVITATION CARD CONTAINER
+              THE FULL-COLOR PRINTABLE & EXPORTABLE INVITATION CARD
               ═══════════════════════════════════════════════════════════════ */}
           <div
             id="printable-invitation-card"
-            className={`relative ${activePreset.bgGradient} ${activePreset.borderStyle} rounded-2xl p-6 sm:p-10 text-center my-4 overflow-hidden transition-all duration-300`}
+            ref={cardRef}
+            style={{
+              ...activeTheme.bgStyle,
+              color: activeTheme.textColor,
+            }}
+            className={`relative ${activeTheme.outerBorder} rounded-2xl p-6 sm:p-10 text-center my-3 overflow-hidden transition-all duration-500`}
           >
-            {/* Corner Ornaments */}
-            <div className={`absolute top-2 left-2 ${activePreset.cornerStyle} text-sm font-serif select-none pointer-events-none`}>
+            {/* Decorative Corner Ornaments */}
+            <div
+              style={{ color: activeTheme.cornerColor }}
+              className="absolute top-2.5 left-2.5 text-base font-serif select-none pointer-events-none opacity-80"
+            >
               ┌──
             </div>
-            <div className={`absolute top-2 right-2 ${activePreset.cornerStyle} text-sm font-serif select-none pointer-events-none`}>
+            <div
+              style={{ color: activeTheme.cornerColor }}
+              className="absolute top-2.5 right-2.5 text-base font-serif select-none pointer-events-none opacity-80"
+            >
               ──┐
             </div>
-            <div className={`absolute bottom-2 left-2 ${activePreset.cornerStyle} text-sm font-serif select-none pointer-events-none`}>
+            <div
+              style={{ color: activeTheme.cornerColor }}
+              className="absolute bottom-2.5 left-2.5 text-base font-serif select-none pointer-events-none opacity-80"
+            >
               └──
             </div>
-            <div className={`absolute bottom-2 right-2 ${activePreset.cornerStyle} text-sm font-serif select-none pointer-events-none`}>
+            <div
+              style={{ color: activeTheme.cornerColor }}
+              className="absolute bottom-2.5 right-2.5 text-base font-serif select-none pointer-events-none opacity-80"
+            >
               ──┘
             </div>
 
-            <div className={`p-4 sm:p-6 ${activePreset.innerBorder} rounded-xl`}>
+            <div className={`p-4 sm:p-7 ${activeTheme.innerBorder} rounded-xl relative z-10`}>
               {/* Header Flourish */}
-              <p className={`text-xs ${activePreset.fontClass} font-bold tracking-[0.25em] ${activePreset.accentText} mb-3 uppercase`}>
-                {copy.flourish}
+              <p
+                style={{ color: activeTheme.accentColor }}
+                className="text-xs sm:text-sm font-cinzel font-bold tracking-[0.25em] mb-3 uppercase"
+              >
+                {wording.headerFlourish}
               </p>
 
-              {/* Subtitle wording */}
-              <p className="text-xs sm:text-sm text-stone-300 font-serif italic mb-4 max-w-md mx-auto leading-relaxed">
-                {copy.subtitle}
+              {/* Subtitle Wording */}
+              <p className="text-xs sm:text-sm text-stone-200/90 font-serif italic mb-4 max-w-md mx-auto leading-relaxed">
+                {wording.subtitle}
               </p>
 
-              {/* Event Title */}
-              <h1 className={`text-2xl sm:text-4xl ${activePreset.fontClass} font-black text-white tracking-wide mb-5 leading-tight`}>
+              {/* Event Title with Rich Styling */}
+              <h1 className={`text-2xl sm:text-4xl font-editorial font-black ${activeTheme.titleColor} tracking-wide mb-5 leading-tight drop-shadow-md`}>
                 {formData.eventName}
               </h1>
 
-              {/* Ornamental Divider */}
+              {/* Ornamental Center Divider */}
               <div className="flex items-center justify-center gap-3 my-4">
-                <div className="w-12 h-px bg-gradient-to-r from-transparent to-current opacity-60" />
-                <DividerIcon className={`w-4 h-4 ${activePreset.accentText}`} />
-                <div className="w-12 h-px bg-gradient-to-l from-transparent to-current opacity-60" />
+                <div
+                  style={{ backgroundColor: activeTheme.accentColor }}
+                  className="w-16 h-[1.5px] opacity-75"
+                />
+                <DividerIcon
+                  style={{ color: activeTheme.accentColor }}
+                  className="w-4 h-4 shrink-0 drop-shadow"
+                />
+                <div
+                  style={{ backgroundColor: activeTheme.accentColor }}
+                  className="w-16 h-[1.5px] opacity-75"
+                />
               </div>
 
-              {/* Event Details Box */}
+              {/* Event Details Grid */}
               <div className="space-y-3 my-5 max-w-sm mx-auto text-xs sm:text-sm">
-                <div className="flex items-center justify-center gap-2 text-stone-200">
-                  <Calendar className={`w-4 h-4 ${activePreset.accentText} shrink-0`} />
-                  <span className="font-semibold tracking-wide">{formalDate}</span>
+                <div className="flex items-center justify-center gap-2 font-medium">
+                  <Calendar
+                    style={{ color: activeTheme.accentColor }}
+                    className="w-4 h-4 shrink-0"
+                  />
+                  <span className="font-bold tracking-wide text-white">{formalDate}</span>
                 </div>
 
-                <div className="flex items-center justify-center gap-2 text-stone-200">
-                  <MapPin className={`w-4 h-4 ${activePreset.accentText} shrink-0`} />
-                  <span className="font-medium">{venueLocation}</span>
+                <div className="flex items-center justify-center gap-2">
+                  <MapPin
+                    style={{ color: activeTheme.accentColor }}
+                    className="w-4 h-4 shrink-0"
+                  />
+                  <span className="font-semibold text-white/95">{venueLocation}</span>
                 </div>
 
-                <div className="pt-2 text-[11px] text-stone-400 flex items-center justify-center gap-2">
-                  <span>Theme: <strong className="text-stone-200">{formData.theme}</strong></span>
+                <div className="pt-2 text-[11px] text-stone-300 flex items-center justify-center gap-2 flex-wrap">
+                  <span>Theme: <strong className="text-white font-bold">{formData.theme}</strong></span>
                   <span>•</span>
-                  <span>Attire: <strong className="text-stone-200">{copy.dressCode}</strong></span>
+                  <span>Attire: <strong className="text-white font-bold">{wording.dressCode}</strong></span>
                 </div>
               </div>
 
               {/* Footer Note */}
-              <p className="text-[11px] text-stone-400 font-serif italic mt-6 pt-4 border-t border-white/10 max-w-md mx-auto">
-                {copy.footerText}
+              <p className="text-[11px] sm:text-xs text-stone-300/80 font-serif italic mt-5 pt-4 border-t border-white/15 max-w-md mx-auto">
+                {wording.footerText}
               </p>
             </div>
           </div>
 
-          {/* Action Buttons Toolbar (Note: "Full Plan (JSON)" button completely removed as requested) */}
-          <div className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-4 border-t border-white/10">
-            {/* Print / Save PDF */}
+          {/* ═══════════════════════════════════════════════════════════════
+              ACTION BUTTONS TOOLBAR (JSON button removed as requested)
+              ═══════════════════════════════════════════════════════════════ */}
+          <div className="mt-5 flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-3 border-t border-white/10">
+            {/* Download Colored Image PNG */}
+            <button
+              onClick={handleDownloadImage}
+              disabled={isExportingImage}
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-600/30 transition-all cursor-pointer disabled:opacity-60"
+            >
+              {isExportingImage ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-stone-950 border-t-transparent rounded-full animate-spin" />
+                  <span>Generating Image...</span>
+                </>
+              ) : (
+                <>
+                  <ImageIcon className="w-4 h-4" />
+                  <span>Download Card Image (PNG)</span>
+                </>
+              )}
+            </button>
+
+            {/* Print / Save as PDF */}
             <button
               onClick={handlePrint}
-              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-600/30 transition-all cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
             >
-              <Printer className="w-4 h-4" />
-              <span>Print / Save as PDF</span>
+              <Printer className="w-4 h-4 text-amber-400" />
+              <span>Print / PDF</span>
             </button>
 
             {/* Copy Digital Invite */}
             <button
               onClick={handleCopyText}
-              className="flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-stone-300 hover:text-white font-medium rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
             >
               {copiedText ? (
                 <>
                   <Check className="w-4 h-4 text-emerald-400" />
-                  <span className="text-emerald-400">Copied Text!</span>
+                  <span className="text-emerald-400">Copied!</span>
                 </>
               ) : (
                 <>
-                  <Share2 className="w-4 h-4 text-amber-400" />
-                  <span>Copy for WhatsApp / SMS</span>
+                  <Share2 className="w-4 h-4 text-stone-400" />
+                  <span>Copy Text (WhatsApp)</span>
                 </>
               )}
             </button>
