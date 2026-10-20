@@ -70,64 +70,64 @@ interface ThemeAccent {
 
 const EVENT_ACCENTS: Record<EventType, ThemeAccent> = {
   Birthday: {
-    glowPrimary: "rgba(236, 72, 153, 0.22)",
-    glowSecondary: "rgba(168, 85, 247, 0.20)",
-    ringColor: "ring-pink-500/40",
-    badgeBg: "bg-pink-500/15 border-pink-500/30",
-    badgeText: "text-pink-300",
-    activeBorder: "border-pink-500/80 shadow-pink-500/20",
-    activeBg: "bg-pink-500/20 text-pink-100",
-    buttonGradient: "from-pink-600 via-purple-600 to-pink-500",
+    glowPrimary: "rgba(245, 158, 11, 0.18)",
+    glowSecondary: "rgba(225, 29, 72, 0.12)",
+    ringColor: "ring-amber-500/40",
+    badgeBg: "bg-amber-500/15 border-amber-500/30",
+    badgeText: "text-amber-200",
+    activeBorder: "border-amber-500/70 shadow-amber-500/20",
+    activeBg: "bg-amber-500/15 text-amber-100",
+    buttonGradient: "from-amber-600 via-amber-500 to-rose-600",
   },
   Wedding: {
-    glowPrimary: "rgba(244, 63, 94, 0.22)",
-    glowSecondary: "rgba(251, 191, 36, 0.18)",
-    ringColor: "ring-rose-500/40",
-    badgeBg: "bg-rose-500/15 border-rose-500/30",
-    badgeText: "text-rose-300",
-    activeBorder: "border-rose-500/80 shadow-rose-500/20",
-    activeBg: "bg-rose-500/20 text-rose-100",
-    buttonGradient: "from-rose-600 via-pink-600 to-amber-600",
+    glowPrimary: "rgba(212, 175, 55, 0.22)",
+    glowSecondary: "rgba(190, 80, 90, 0.14)",
+    ringColor: "ring-[#d4af37]/50",
+    badgeBg: "bg-[#d4af37]/15 border-[#d4af37]/35",
+    badgeText: "text-[#f3e8c8]",
+    activeBorder: "border-[#d4af37]/80 shadow-[#d4af37]/25",
+    activeBg: "bg-[#d4af37]/15 text-[#fdfbf7]",
+    buttonGradient: "from-[#c59b27] via-[#d4af37] to-[#b8860b]",
   },
   "Corporate Gala": {
-    glowPrimary: "rgba(99, 102, 241, 0.22)",
-    glowSecondary: "rgba(234, 179, 8, 0.16)",
-    ringColor: "ring-indigo-500/40",
-    badgeBg: "bg-indigo-500/15 border-indigo-500/30",
-    badgeText: "text-indigo-300",
-    activeBorder: "border-indigo-500/80 shadow-indigo-500/20",
-    activeBg: "bg-indigo-500/20 text-indigo-100",
-    buttonGradient: "from-indigo-600 via-blue-600 to-violet-600",
+    glowPrimary: "rgba(59, 130, 246, 0.16)",
+    glowSecondary: "rgba(212, 175, 55, 0.12)",
+    ringColor: "ring-blue-500/40",
+    badgeBg: "bg-blue-500/15 border-blue-500/30",
+    badgeText: "text-blue-200",
+    activeBorder: "border-blue-400/70 shadow-blue-500/20",
+    activeBg: "bg-blue-500/15 text-blue-100",
+    buttonGradient: "from-blue-700 via-indigo-600 to-slate-800",
   },
   "College Fest": {
-    glowPrimary: "rgba(249, 115, 22, 0.22)",
-    glowSecondary: "rgba(168, 85, 247, 0.18)",
+    glowPrimary: "rgba(234, 88, 12, 0.18)",
+    glowSecondary: "rgba(245, 158, 11, 0.14)",
     ringColor: "ring-orange-500/40",
     badgeBg: "bg-orange-500/15 border-orange-500/30",
-    badgeText: "text-orange-300",
-    activeBorder: "border-orange-500/80 shadow-orange-500/20",
-    activeBg: "bg-orange-500/20 text-orange-100",
-    buttonGradient: "from-orange-600 via-amber-600 to-purple-600",
+    badgeText: "text-orange-200",
+    activeBorder: "border-orange-500/70 shadow-orange-500/20",
+    activeBg: "bg-orange-500/15 text-orange-100",
+    buttonGradient: "from-orange-600 via-amber-600 to-amber-700",
   },
   Anniversary: {
-    glowPrimary: "rgba(16, 185, 129, 0.20)",
-    glowSecondary: "rgba(245, 158, 11, 0.18)",
+    glowPrimary: "rgba(16, 185, 129, 0.16)",
+    glowSecondary: "rgba(212, 175, 55, 0.14)",
     ringColor: "ring-emerald-500/40",
     badgeBg: "bg-emerald-500/15 border-emerald-500/30",
-    badgeText: "text-emerald-300",
-    activeBorder: "border-emerald-500/80 shadow-emerald-500/20",
-    activeBg: "bg-emerald-500/20 text-emerald-100",
-    buttonGradient: "from-emerald-600 via-teal-600 to-amber-600",
+    badgeText: "text-emerald-200",
+    activeBorder: "border-emerald-500/70 shadow-emerald-500/20",
+    activeBg: "bg-emerald-500/15 text-emerald-100",
+    buttonGradient: "from-emerald-700 via-teal-600 to-amber-700",
   },
   "Tech Conference": {
-    glowPrimary: "rgba(6, 182, 212, 0.22)",
-    glowSecondary: "rgba(59, 130, 246, 0.20)",
+    glowPrimary: "rgba(6, 182, 212, 0.16)",
+    glowSecondary: "rgba(59, 130, 246, 0.14)",
     ringColor: "ring-cyan-500/40",
     badgeBg: "bg-cyan-500/15 border-cyan-500/30",
-    badgeText: "text-cyan-300",
-    activeBorder: "border-cyan-500/80 shadow-cyan-500/20",
-    activeBg: "bg-cyan-500/20 text-cyan-100",
-    buttonGradient: "from-cyan-600 via-blue-600 to-indigo-600",
+    badgeText: "text-cyan-200",
+    activeBorder: "border-cyan-400/70 shadow-cyan-500/20",
+    activeBg: "bg-cyan-500/15 text-cyan-100",
+    buttonGradient: "from-cyan-700 via-blue-600 to-slate-800",
   },
 };
 
@@ -295,20 +295,20 @@ export default function EventSetupWizard({
   const stepLabels = ["Event Details", "Budget & Vibe", "Review & Launch"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-[#0b0c16] via-[#151226] to-[#0d0d1a] flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-700">
-      {/* Dynamic Ambient Mesh Glows */}
+    <div className="min-h-screen bg-gradient-to-tr from-[#0c0d12] via-[#14161d] to-[#0e0f14] flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-700 text-stone-100">
+      {/* Dynamic Ambient Candlelight & Atmosphere Glows */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div
-          className="absolute -top-32 -right-32 w-[550px] h-[550px] rounded-full blur-[120px] transition-all duration-1000 ease-out"
+          className="absolute -top-32 -right-32 w-[550px] h-[550px] rounded-full blur-[140px] transition-all duration-1000 ease-out opacity-50"
           style={{ backgroundColor: currentAccent.glowPrimary }}
         />
         <div
-          className="absolute -bottom-32 -left-32 w-[550px] h-[550px] rounded-full blur-[120px] transition-all duration-1000 ease-out"
+          className="absolute -bottom-32 -left-32 w-[550px] h-[550px] rounded-full blur-[140px] transition-all duration-1000 ease-out opacity-40"
           style={{ backgroundColor: currentAccent.glowSecondary }}
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none" />
-        {/* Subtle grid texture */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-amber-900/10 rounded-full blur-[150px] pointer-events-none" />
+        {/* Subtle warm dot texture */}
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(224,186,117,0.03)_1px,transparent_1px)] [background-size:24px_24px] opacity-35" />
       </div>
 
       <div className="relative w-full max-w-2xl my-6">
@@ -317,15 +317,15 @@ export default function EventSetupWizard({
           <div className="flex items-center justify-center gap-2 mb-3">
             <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${currentAccent.badgeBg} ${currentAccent.badgeText} backdrop-blur-md transition-all duration-500`}>
               <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-              AI-Powered Event Orchestrator
+              Human-Crafted Celebration Atelier
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-white via-slate-100 to-purple-200 bg-clip-text text-transparent mb-2 tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-editorial font-bold bg-gradient-to-r from-stone-100 via-amber-100 to-amber-300 bg-clip-text text-transparent mb-2 tracking-wide">
             CelebrateAI
           </h1>
-          <p className="text-slate-400 text-sm sm:text-base max-w-md mx-auto">
-            Design bespoke celebrations, optimize budgets, and orchestrate seamless itineraries in seconds.
+          <p className="text-stone-400 text-sm sm:text-base max-w-md mx-auto font-sans leading-relaxed">
+            Curate bespoke celebrations, master budget allocations, and orchestrate memorable event itineraries.
           </p>
 
           {/* Try Demo Template Chips */}

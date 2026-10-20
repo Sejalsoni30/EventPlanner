@@ -188,18 +188,18 @@ export default function ItineraryTimeline({
   return (
     <section
       aria-labelledby="itinerary-heading"
-      className="glass-card rounded-3xl p-6 backdrop-blur-xl border border-white/10 shadow-2xl transition-all"
+      className="human-card rounded-3xl p-6 backdrop-blur-xl border border-amber-500/20 shadow-2xl transition-all"
     >
       {/* Header with Quick Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 mb-5 border-b border-white/10 gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-pink-500/20 border border-pink-500/30 rounded-2xl shadow-lg shadow-pink-500/20">
-            <Clock className="w-5 h-5 text-pink-400" aria-hidden="true" />
+          <div className="p-2.5 bg-amber-500/15 border border-amber-500/30 rounded-2xl shadow-lg shadow-amber-500/10">
+            <Clock className="w-5 h-5 text-amber-400" aria-hidden="true" />
           </div>
           <div>
             <h2 id="itinerary-heading" className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
               Hourly Itinerary
-              <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30">
+              <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
                 Live Timeline
               </span>
             </h2>

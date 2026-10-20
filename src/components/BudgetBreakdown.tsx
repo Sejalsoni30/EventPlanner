@@ -70,18 +70,18 @@ export default function BudgetBreakdown({ distribution }: Props) {
   return (
     <section
       aria-labelledby="budget-heading"
-      className="glass-card rounded-3xl p-6 backdrop-blur-xl border border-white/10 shadow-2xl transition-all"
+      className="human-card rounded-3xl p-6 backdrop-blur-xl border border-amber-500/20 shadow-2xl transition-all"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-violet-500/20 border border-violet-500/30 rounded-2xl shadow-lg shadow-violet-500/20">
-            <TrendingUp className="w-5 h-5 text-violet-400" aria-hidden="true" />
+          <div className="p-2.5 bg-amber-500/15 border border-amber-500/30 rounded-2xl shadow-lg shadow-amber-500/10">
+            <TrendingUp className="w-5 h-5 text-amber-400" aria-hidden="true" />
           </div>
           <div>
             <h2 id="budget-heading" className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
               Smart Budget Allocator
-              <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">
+              <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
                 100% Allocated
               </span>
             </h2>

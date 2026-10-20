@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 *, *::before, *::after {
@@ -11,33 +11,41 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #0b0c16;
-  color: #f8fafc;
+  background-color: #0c0d11;
+  color: #f7f6f2;
   overflow-x: hidden;
 }
 
-/* Custom modern scrollbar */
+/* Serif & Typography utilities for human-made editorial luxury */
+.font-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+/* Custom modern scrollbar with warm amber thumb */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(11, 12, 22, 0.6);
+  background: rgba(12, 13, 17, 0.7);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.35);
+  background: rgba(212, 175, 55, 0.35);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.6);
+  background: rgba(212, 175, 55, 0.6);
 }
 
-/* Focus ring override for dark theme */
+/* Focus ring override with warm champagne gold */
 :focus-visible {
-  outline: 2px solid rgba(168, 85, 247, 0.8);
+  outline: 2px solid rgba(212, 175, 55, 0.85);
   outline-offset: 2px;
 }
 
@@ -59,55 +67,63 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* Date input dark mode fix */
+/* Date input dark mode fix with warm accent */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1) opacity(0.6);
+  filter: invert(0.9) sepia(0.5) saturate(2) hue-rotate(5deg);
   cursor: pointer;
 }
 
-/* Subtle glassmorphism utilities */
-.glass-card {
-  background: rgba(255, 255, 255, 0.035);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(139, 92, 246, 0.06);
+/* Human-made luxury card styles */
+.human-card {
+  background: rgba(22, 24, 30, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(224, 186, 117, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 20px rgba(212, 175, 55, 0.04);
 }
 
-.glass-card-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.human-card-hover {
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.glass-card-hover:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.16);
+.human-card-hover:hover {
+  background: rgba(28, 30, 38, 0.85);
+  border-color: rgba(224, 186, 117, 0.24);
   transform: translateY(-2px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 50px rgba(168, 85, 247, 0.12);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 0 28px rgba(212, 175, 55, 0.08);
 }
 
-/* Shimmer animation */
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.shimmer-effect {
-  position: relative;
-  overflow: hidden;
-}
-.shimmer-effect::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform: translateX(-100%);
+/* Luxury Gold Foil Border */
+.gold-border {
+  border: 1px solid rgba(212, 175, 55, 0.35);
   background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0.08) 20%,
-    rgba(255, 255, 255, 0.15) 60%,
-    rgba(255, 255, 255, 0)
+    135deg,
+    rgba(212, 175, 55, 0.15) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(212, 175, 55, 0.1) 100%
   );
-  animation: shimmer 2.5s infinite;
+}
+
+/* Print Stylesheet for Pristine Invitation Card PDF / Printing */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-invitation-card, #printable-invitation-card * {
+    visibility: visible;
+  }
+  #printable-invitation-card {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90% !important;
+    max-width: 600px !important;
+    background: #0f1015 !important;
+    color: #f7f6f2 !important;
+    border: 2px solid #d4af37 !important;
+    box-shadow: none !important;
+    padding: 32px !important;
+    border-radius: 20px !important;
+    page-break-inside: avoid;
+  }
 }

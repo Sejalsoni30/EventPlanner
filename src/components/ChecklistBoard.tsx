@@ -129,7 +129,7 @@ export default function ChecklistBoard({ milestones, onUpdate }: Props) {
   return (
     <section
       aria-labelledby="checklist-heading"
-      className="glass-card rounded-3xl p-6 backdrop-blur-xl border border-white/10 shadow-2xl transition-all"
+      className="human-card rounded-3xl p-6 backdrop-blur-xl border border-amber-500/20 shadow-2xl transition-all"
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-5 border-b border-white/10 gap-4">
