@@ -186,12 +186,12 @@ export default function VenueMap({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap items-center gap-2 pt-2">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 pt-2">
             <a
               href={googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 px-3 py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold rounded-xl text-xs transition-all shadow-md shadow-amber-600/25"
+              className="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold rounded-xl text-xs transition-all shadow-md shadow-amber-600/25 sm:flex-1"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Google Maps</span>
@@ -201,7 +201,7 @@ export default function VenueMap({
               href={directionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 px-3 py-2.5 bg-white/10 hover:bg-white/15 border border-white/15 hover:border-amber-500/40 text-stone-200 hover:text-white font-semibold rounded-xl text-xs transition-all"
+              className="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-white/10 hover:bg-white/15 border border-white/15 hover:border-amber-500/40 text-stone-200 hover:text-white font-semibold rounded-xl text-xs transition-all sm:flex-1"
             >
               <Navigation className="w-3.5 h-3.5 text-amber-400" />
               <span>Get Directions</span>
@@ -210,17 +210,17 @@ export default function VenueMap({
             <button
               onClick={handleCopyLocation}
               aria-label="Copy venue address"
-              className="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-medium text-stone-300 hover:text-white transition-all cursor-pointer"
+              className="col-span-2 sm:col-span-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-medium text-stone-300 hover:text-white transition-all cursor-pointer"
             >
               {copied ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Copied</span>
+                  <span className="text-emerald-400">Copied Address</span>
                 </>
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5 text-stone-400" />
-                  <span>Copy</span>
+                  <span>Copy Address</span>
                 </>
               )}
             </button>

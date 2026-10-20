@@ -251,13 +251,13 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.94, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.94, y: 16 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="relative w-full max-w-2xl bg-[#0f1015] border border-amber-500/30 rounded-3xl p-5 sm:p-8 shadow-2xl my-6 text-stone-100"
+          className="relative w-full max-w-2xl bg-[#0f1015] border border-amber-500/30 rounded-3xl p-4 sm:p-8 shadow-2xl my-auto max-h-[94vh] overflow-y-auto text-stone-100"
           role="dialog"
           aria-modal="true"
           aria-labelledby="invitation-card-title"
@@ -266,7 +266,7 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
           <button
             onClick={onClose}
             aria-label="Close invitation modal"
-            className="absolute top-5 right-5 p-2 rounded-full bg-white/5 hover:bg-white/10 text-stone-400 hover:text-white transition-colors cursor-pointer z-10"
+            className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 p-2 rounded-full bg-white/10 hover:bg-white/15 text-stone-300 hover:text-white transition-colors cursor-pointer z-20"
           >
             <X className="w-5 h-5" />
           </button>
@@ -421,12 +421,12 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
           {/* ═══════════════════════════════════════════════════════════════
               ACTION BUTTONS TOOLBAR (JSON button removed as requested)
               ═══════════════════════════════════════════════════════════════ */}
-          <div className="mt-5 flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-3 border-t border-white/10">
+          <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-center sm:justify-start gap-2.5 sm:gap-3 pt-3 border-t border-white/10">
             {/* Download Colored Image PNG */}
             <button
               onClick={handleDownloadImage}
               disabled={isExportingImage}
-              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-600/30 transition-all cursor-pointer disabled:opacity-60"
+              className="flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-600/30 transition-all cursor-pointer disabled:opacity-60"
             >
               {isExportingImage ? (
                 <>
@@ -444,7 +444,7 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
             {/* Print / Save as PDF */}
             <button
               onClick={handlePrint}
-              className="flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
+              className="flex items-center justify-center gap-2 px-4 py-3 sm:py-2.5 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
             >
               <Printer className="w-4 h-4 text-amber-400" />
               <span>Print / PDF</span>
@@ -453,7 +453,7 @@ export default function InvitationCardModal({ plan, isOpen, onClose }: Props) {
             {/* Copy Digital Invite */}
             <button
               onClick={handleCopyText}
-              className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-stone-300 hover:text-white font-medium rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
+              className="flex items-center justify-center gap-2 px-4 py-3 sm:py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-stone-300 hover:text-white font-medium rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
             >
               {copiedText ? (
                 <>

@@ -831,9 +831,9 @@ export default function EventSetupWizard({
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex justify-between items-start gap-4 py-0.5">
+    <div className="flex justify-between items-start gap-3 py-0.5">
       <span className="text-slate-400 text-xs shrink-0">{label}</span>
-      <span className="text-white text-xs font-semibold text-right truncate max-w-[280px]">{value}</span>
+      <span className="text-white text-xs font-semibold text-right truncate max-w-[170px] sm:max-w-[280px]">{value}</span>
     </div>
   );
 }

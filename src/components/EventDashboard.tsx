@@ -118,38 +118,40 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Top Navbar */}
-        <nav className="flex items-center justify-between mb-8 pb-4 border-b border-white/10" aria-label="Dashboard navigation">
-          <div className="flex items-center gap-3">
-            <CelebrateLogo size={38} />
-            <div>
-              <span className="text-xl font-editorial font-bold bg-gradient-to-r from-stone-100 via-amber-100 to-amber-300 bg-clip-text text-transparent">
+        <nav className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 mb-6 sm:mb-8 pb-4 border-b border-white/10" aria-label="Dashboard navigation">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <CelebrateLogo size={34} />
+            <div className="min-w-0">
+              <span className="text-lg sm:text-xl font-editorial font-bold bg-gradient-to-r from-stone-100 via-amber-100 to-amber-300 bg-clip-text text-transparent truncate block">
                 CelebrateAI
               </span>
-              <span className="hidden sm:inline-block ml-2.5 text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded-full bg-white/10 text-stone-300 border border-white/10">
+              <span className="hidden md:inline-block text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded-full bg-white/10 text-stone-300 border border-white/10">
                 Hospitality Atelier
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-auto sm:ml-0">
             {/* Export & Invitation Button */}
             <button
               onClick={handleExportClick}
               aria-label="Export event plan as JSON"
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-amber-600/25 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-amber-600/25 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer"
             >
               <Mail className="w-4 h-4 text-stone-950" aria-hidden="true" />
-              <span>Invitation Card & Export</span>
+              <span className="hidden sm:inline">Invitation Card & Export</span>
+              <span className="sm:hidden">Invite Card</span>
             </button>
 
             {/* New Event Button */}
             <button
               onClick={onReset}
               aria-label="Start over and plan a new event"
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-white/5 hover:bg-white/10 border border-white/15 text-stone-300 hover:text-white rounded-xl text-xs sm:text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-2 bg-white/5 hover:bg-white/10 border border-white/15 text-stone-300 hover:text-white rounded-xl text-xs sm:text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>New Event</span>
+              <span className="hidden sm:inline">New Event</span>
+              <span className="sm:hidden">New</span>
             </button>
           </div>
         </nav>
@@ -315,7 +317,7 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
         </section>
 
         {/* Footer */}
-        <footer className="mt-8 pt-6 border-t border-white/10 text-center">
+        <footer className="mt-8 pt-6 pb-24 sm:pb-8 border-t border-white/10 text-center">
           <p className="text-stone-500 text-xs font-serif">
             CelebrateAI — Synthesized on{" "}
             {new Date(generatedAt).toLocaleDateString("en-US", {
