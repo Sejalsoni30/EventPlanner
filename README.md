@@ -7,6 +7,9 @@
 [![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?logo=vite)](https://vite.dev)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.x-38BDF8?logo=tailwindcss)](https://tailwindcss.com)
 [![Vitest](https://img.shields.io/badge/Vitest-5.x-6E9F18?logo=vitest)](https://vitest.dev)
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20on%20GitHub%20Pages-brightgreen?logo=github&style=for-the-badge)](https://sejalsoni30.github.io/EventPlanner/)
+
+**🌐 Live Demo:** [https://sejalsoni30.github.io/EventPlanner/](https://sejalsoni30.github.io/EventPlanner/)
 
 ---
 
