@@ -8,6 +8,7 @@ import ChecklistBoard from "./ChecklistBoard";
 import VendorScripts from "./VendorScripts";
 import VenueMap from "./VenueMap";
 import InvitationCardModal from "./InvitationCardModal";
+import { CelebrateLogo } from "./CelebrateLogo";
 import {
   Sparkles,
   RefreshCw,
@@ -118,10 +119,8 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Top Navbar */}
         <nav className="flex items-center justify-between mb-8 pb-4 border-b border-white/10" aria-label="Dashboard navigation">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-amber-500/15 border border-amber-500/30 rounded-xl">
-              <Sparkles className="w-5 h-5 text-amber-400" aria-hidden="true" />
-            </div>
+          <div className="flex items-center gap-3">
+            <CelebrateLogo size={38} />
             <div>
               <span className="text-xl font-editorial font-bold bg-gradient-to-r from-stone-100 via-amber-100 to-amber-300 bg-clip-text text-transparent">
                 CelebrateAI

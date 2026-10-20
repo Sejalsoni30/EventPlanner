@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { EventFormData, EventType, Theme, Currency } from "../types";
 import { validateEventInput } from "../utils/budgetCalculator";
+import { CelebrateLogo } from "./CelebrateLogo";
 import {
   Sparkles,
   Calendar,
@@ -314,6 +315,9 @@ export default function EventSetupWizard({
       <div className="relative w-full max-w-2xl my-6">
         {/* Header Bar */}
         <div className="text-center mb-6">
+          <div className="flex items-center justify-center mb-3">
+            <CelebrateLogo size={46} />
+          </div>
           <div className="flex items-center justify-center gap-2 mb-3">
             <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${currentAccent.badgeBg} ${currentAccent.badgeText} backdrop-blur-md transition-all duration-500`}>
               <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
