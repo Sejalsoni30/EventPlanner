@@ -100,9 +100,17 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
               <span className="text-xs text-purple-200 font-medium">AI-Generated Plan</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">{formData.eventName}</h1>
-            <p className="text-slate-300 mb-5">
-              {formData.eventType}
-              {formData.venue && ` • ${formData.venue}`}
+            <p className="text-slate-300 mb-5 flex items-center gap-2 flex-wrap text-sm sm:text-base">
+              <span>{formData.eventType}</span>
+              {formData.venue && (
+                <>
+                  <span>•</span>
+                  <span className="inline-flex items-center gap-1 text-purple-200">
+                    <MapPin className="w-3.5 h-3.5 text-purple-400" aria-hidden="true" />
+                    {formData.venue}
+                  </span>
+                </>
+              )}
             </p>
 
             {/* Key Stats */}

@@ -72,7 +72,7 @@ export default function App() {
   return (
     <EventSetupWizard
       onSubmit={handleFormSubmit}
-      isGenerating={step === "generating"}
+      isGenerating={false}
       apiKey={apiKey}
       onApiKeyChange={setApiKey}
     />
