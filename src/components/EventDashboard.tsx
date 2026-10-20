@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import type { EventPlan, GuestMilestone, EventType } from "../types";
 import { formatCurrency } from "../utils/budgetCalculator";
 import BudgetBreakdown from "./BudgetBreakdown";
@@ -17,6 +17,8 @@ import {
   Palette,
   MapPin,
   Mail,
+  Home,
+  ArrowUp,
 } from "lucide-react";
 
 interface Props {
@@ -83,9 +85,18 @@ const EVENT_TYPE_THEMES: Record<
 export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Props) {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [currentVenue, setCurrentVenue] = useState(plan.formData.venue || "The Grand Ballroom");
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const { formData, budgetDistribution, itinerary, milestones, vendorScripts, generatedAt } = plan;
   const theme = EVENT_TYPE_THEMES[formData.eventType] || EVENT_TYPE_THEMES.Birthday;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 350);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleExportClick = () => {
     // Opens the bespoke Invitation Card Studio
@@ -246,8 +257,66 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
           </div>
         </main>
 
+        {/* ═══════════════════════════════════════════════════════════════
+            GRAND "GO TO HOME PAGE" FINALE CARD (AT THE VERY LAST)
+            ═══════════════════════════════════════════════════════════════ */}
+        <section
+          aria-label="Return to home page and next actions"
+          className="mt-14 mb-8 human-card rounded-3xl p-8 sm:p-12 border-2 border-amber-500/30 text-center relative overflow-hidden backdrop-blur-2xl shadow-2xl"
+        >
+          {/* Subtle background ambient glow */}
+          <div className="absolute inset-0 bg-gradient-to-b from-amber-500/10 via-transparent to-black/40 pointer-events-none" />
+
+          <div className="relative z-10 max-w-xl mx-auto">
+            <span className="text-[11px] font-cinzel font-bold tracking-[0.25em] text-amber-400 uppercase bg-amber-500/10 border border-amber-500/30 px-4 py-1.5 rounded-full inline-flex items-center gap-2 mb-4">
+              <Sparkles className="w-3.5 h-3.5" />
+              Blueprint Finalized & Ready for Execution
+            </span>
+
+            <h2 className="text-2xl sm:text-4xl font-editorial font-bold text-white mb-3 tracking-wide leading-tight">
+              Ready to Orchestrate Your Next Celebration?
+            </h2>
+
+            <p className="text-stone-300 text-xs sm:text-sm font-sans mb-8 leading-relaxed">
+              Your budget allocation, hourly itinerary, venue map, milestone checklist, and vendor scripts are fully configured. You can return to the home page anytime to design a new celebration or print your bespoke invitation card.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5">
+              {/* Primary Go to Home Page CTA */}
+              <button
+                onClick={onReset}
+                aria-label="Go to home page to create a new event"
+                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-extrabold rounded-2xl text-sm sm:text-base shadow-xl shadow-amber-600/35 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              >
+                <Home className="w-5 h-5 text-stone-950" />
+                <span>Go to Home Page</span>
+              </button>
+
+              {/* View Invitation Card */}
+              <button
+                onClick={() => setIsInvitationOpen(true)}
+                aria-label="Open bespoke invitation card studio"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold rounded-2xl text-sm sm:text-base hover:scale-102 active:scale-98 transition-all cursor-pointer"
+              >
+                <Mail className="w-4 h-4 text-amber-400" />
+                <span>Invitation Card</span>
+              </button>
+
+              {/* Back to Top */}
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                aria-label="Scroll back to top of dashboard"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-stone-300 hover:text-white font-medium rounded-2xl text-sm transition-all cursor-pointer"
+              >
+                <ArrowUp className="w-4 h-4" />
+                <span>Back to Top</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
         {/* Footer */}
-        <footer className="mt-12 pt-6 border-t border-white/10 text-center">
+        <footer className="mt-8 pt-6 border-t border-white/10 text-center">
           <p className="text-stone-500 text-xs font-serif">
             CelebrateAI — Synthesized on{" "}
             {new Date(generatedAt).toLocaleDateString("en-US", {
@@ -260,6 +329,36 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
           </p>
         </footer>
       </div>
+
+      {/* Floating Quick Action Navigation Pill (Bottom-Right) */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-40 flex items-center gap-2 p-1.5 rounded-2xl bg-stone-950/90 border border-amber-500/40 shadow-2xl backdrop-blur-xl"
+          >
+            <button
+              onClick={onReset}
+              title="Go to Home Page"
+              aria-label="Go to Home Page"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 font-bold rounded-xl text-xs hover:from-amber-500 hover:to-amber-400 transition-all cursor-pointer shadow-md shadow-amber-600/20"
+            >
+              <Home className="w-3.5 h-3.5" />
+              <span>Home</span>
+            </button>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              title="Scroll to Top"
+              aria-label="Scroll to top"
+              className="p-2 text-stone-300 hover:text-white hover:bg-white/10 rounded-xl transition-all cursor-pointer"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Bespoke Invitation Card Modal */}
       <InvitationCardModal
