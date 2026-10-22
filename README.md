@@ -108,11 +108,17 @@ Instant one-click evaluation presets pre-load realistic scenarios:
 - Real-time progress metric bar computing completion rate and dynamic task count.
 - Filter controls by priority level and expandable detail notes.
 
-### 💌 6. Bespoke Invitation Card Studio
-- Built-in invitation designer rendering print-ready celebration stationery.
-- 5 Luxury Color Themes: **Imperial Gold**, **Ruby Gold**, **Emerald Majesty**, **Sapphire Royal**, and **Saffron Elegance**.
-- **HTML-to-Image Canvas Export**: Download crisp PNG graphics directly to the client filesystem using `html-to-image`.
-- Native browser print stylesheet integration.
+### 💌 6. Bespoke Luxury Stationery & Invitation Atelier
+- **5 Premier Stationery Templates** inspired by top wedding houses (*Say I Do, Minted, WedMeGood, Brides*):
+  - 🌿 **Botanical Eucalyptus**: Delicate watercolor olive & eucalyptus garland, flowing script calligraphy, and textured linen paper.
+  - 👑 **Royal Heritage Arch**: Scalloped Mughal Jharokha arch, dual-tier marigold toran (genda phool) with brass bell pendants, and auspicious Sanskrit typography.
+  - 🏺 **Porcelain Blue Toile**: French classic rococo floral vine frame and royal crest in rich cobalt blue.
+  - ✨ **Enchanted Twilight**: Romantic twilight slate card with hanging glowing fairy lights and interwoven eucalyptus vines.
+  - 📜 **Minimalist Letterpress**: Artisanal warm ecru cotton paper with 3D embossed gold wax seal medallion.
+- **Live Personalizer Drawer**: Fine-tune honoree names, host lead-in lines, ceremony time, venue, attire, and RSVP note with real-time card preview.
+- **High-Definition PNG Export**: Generates crystal-clear 2.5x pixel-ratio PNG images using `html-to-image` for instant sharing on WhatsApp or Instagram.
+- **Native Print & PDF Engine**: Custom print stylesheet (`@media print`) for borderless, high-fidelity physical card prints.
+- **One-Click WhatsApp Digital Invite**: Copies emoji-formatted celebration message to clipboard with instant confirmation.
 
 ### 🗺️ 7. Live Venue Explorer & Navigation
 - Interactive Google Maps embed reflecting the planner's selected venue.

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 *, *::before, *::after {
@@ -25,6 +25,15 @@ body {
 }
 .font-cinzel {
   font-family: 'Cinzel', serif;
+}
+.font-script {
+  font-family: 'Great Vibes', 'Alex Brush', cursive;
+}
+.font-brush {
+  font-family: 'Alex Brush', 'Great Vibes', cursive;
+}
+.font-cormorant {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 }
 
 /* Custom modern scrollbar with warm amber thumb */
