@@ -4,7 +4,7 @@ import { CelebrateLogo } from "./CelebrateLogo";
 import {
   Sparkles, ArrowRight, Star, Zap, Shield, Users, Calendar,
   Palette, BarChart3, MapPin, MessageSquare, Gift,
-  ChevronDown, Play, Check,
+  ChevronDown, Play, Check, ArrowUp,
 } from "lucide-react";
 
 import confetti from "canvas-confetti";
@@ -104,12 +104,12 @@ const FEATURES = [
 
 // ─── EVENT TYPE SHOWCASE ──────────────────────────────────────────────────────
 const EVENT_TYPES = [
-  { emoji: "💍", label: "Wedding", color: "#d4af37" },
-  { emoji: "🎂", label: "Birthday", color: "#f59e0b" },
-  { emoji: "🏆", label: "Corporate Gala", color: "#3b82f6" },
-  { emoji: "🎓", label: "College Fest", color: "#f97316" },
-  { emoji: "🥂", label: "Anniversary", color: "#10b981" },
-  { emoji: "💻", label: "Tech Conference", color: "#06b6d4" },
+  { emoji: "💍", label: "Wedding", color: "#d4af37", tagline: "Royal Heritage & Vows", badge: "Popular", guests: "100–1,000+ Guests" },
+  { emoji: "🎂", label: "Birthday", color: "#f59e0b", tagline: "Milestone Bashes & Fun", badge: "Trending", guests: "20–250+ Guests" },
+  { emoji: "🏆", label: "Corporate Gala", color: "#3b82f6", tagline: "Summits & Award Nights", badge: "Enterprise", guests: "100–2,500+ Guests" },
+  { emoji: "🎓", label: "College Fest", color: "#f97316", tagline: "Campus Beats & Cultural", badge: "Campus", guests: "500–10,000+ Guests" },
+  { emoji: "🥂", label: "Anniversary", color: "#10b981", tagline: "Romance & Milestone Feasts", badge: "Bespoke", guests: "30–300+ Guests" },
+  { emoji: "💻", label: "Tech Conference", color: "#06b6d4", tagline: "Keynotes & Hackathons", badge: "Flagship", guests: "150–5,000+ Guests" },
 ];
 
 // ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
@@ -316,7 +316,7 @@ export default function LandingPage({ onGetStarted }: Props) {
           transition={{ delay: 0.7, duration: 0.8 }}
           className="flex flex-wrap items-center justify-center gap-6 text-xs text-stone-500"
         >
-          {["✅ No credit card required", "✅ Setup in 60 seconds", "✅ Works without API key", "✅ 80/80 tests passing"].map((badge) => (
+          {["✅ No credit card required", "✅ Setup in 60 seconds", "✅ Works without API key", "✅ 81/81 tests passing"].map((badge) => (
             <span key={badge} className="font-medium">{badge}</span>
           ))}
         </motion.div>
@@ -531,35 +531,86 @@ export default function LandingPage({ onGetStarted }: Props) {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {EVENT_TYPES.map((et, i) => (
               <motion.button
                 key={et.label}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.92 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.04, y: -4 }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                whileHover={{ scale: 1.03, y: -6 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleLaunch(et.label as EventType)}
                 aria-label={`Plan a ${et.label} event`}
-                className="relative group flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border cursor-pointer transition-all overflow-hidden"
+                className="relative group flex flex-col items-center justify-between p-6 sm:p-7 rounded-3xl border cursor-pointer transition-all duration-300 overflow-hidden text-center min-h-[260px]"
                 style={{
-                  borderColor: `${et.color}30`,
-                  background: "rgba(18,20,26,0.7)",
+                  borderColor: `${et.color}35`,
+                  background: "radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.04) 0%, rgba(18,20,26,0.85) 80%)",
+                  boxShadow: `0 12px 36px -12px ${et.color}25`,
                 }}
               >
+                {/* Top Glowing Color Accent Bar */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-1 opacity-70 group-hover:opacity-100 transition-opacity"
+                  style={{ background: `linear-gradient(90deg, transparent, ${et.color}, transparent)` }}
+                />
+
+                {/* Category Badge top right */}
+                {et.badge && (
+                  <span
+                    className="absolute top-3.5 right-3.5 text-[10px] font-bold px-2.5 py-0.5 rounded-full border tracking-wide uppercase font-sans"
+                    style={{
+                      background: `${et.color}18`,
+                      borderColor: `${et.color}50`,
+                      color: et.color,
+                    }}
+                  >
+                    {et.badge}
+                  </span>
+                )}
+
+                {/* Ambient Radial Hover Glow */}
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ background: `radial-gradient(ellipse at center, ${et.color}15 0%, transparent 70%)` }}
+                  style={{ background: `radial-gradient(ellipse at center, ${et.color}20 0%, transparent 70%)` }}
                 />
-                <span className="text-5xl" role="img" aria-hidden="true">{et.emoji}</span>
-                <span className="font-bold text-stone-200 text-sm group-hover:text-white transition-colors">{et.label}</span>
+
+                {/* Icon with glowing backdrop */}
+                <div className="relative mb-3 mt-1">
+                  <div
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl border transition-all duration-300 group-hover:scale-110"
+                    style={{
+                      background: `radial-gradient(circle at center, ${et.color}25 0%, rgba(255,255,255,0.03) 70%)`,
+                      borderColor: `${et.color}40`,
+                      boxShadow: `0 8px 24px ${et.color}20`,
+                    }}
+                  >
+                    <span role="img" aria-hidden="true">{et.emoji}</span>
+                  </div>
+                </div>
+
+                {/* Event Name & Tagline */}
+                <div className="mb-4">
+                  <h3 className="font-bold text-stone-100 text-lg group-hover:text-white transition-colors mb-1 font-editorial">
+                    {et.label}
+                  </h3>
+                  <p className="text-xs text-stone-400 font-sans">{et.tagline}</p>
+                  <span className="text-[10px] text-stone-500 font-sans block mt-1">{et.guests}</span>
+                </div>
+
+                {/* Attractive Action Pill with Always Visible Glow */}
                 <span
-                  className="text-[11px] font-semibold px-3 py-1 rounded-full border opacity-0 group-hover:opacity-100 transition-all"
-                  style={{ color: et.color, borderColor: `${et.color}40`, background: `${et.color}12` }}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-1.5 rounded-full border transition-all duration-300 group-hover:scale-105"
+                  style={{
+                    color: et.color,
+                    borderColor: `${et.color}50`,
+                    background: `${et.color}15`,
+                    boxShadow: `0 2px 10px ${et.color}18`,
+                  }}
                 >
-                  Plan Now →
+                  <span>Plan Now</span>
+                  <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
                 </span>
               </motion.button>
             ))}
@@ -752,6 +803,46 @@ export default function LandingPage({ onGetStarted }: Props) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Floating Back to Top Button */}
+      <BackToTopButton />
     </div>
+  );
+}
+
+function BackToTopButton() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      setShow(window.scrollY > 350);
+    };
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    return () => window.removeEventListener("scroll", checkScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8, y: 15 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: 15 }}
+          whileHover={{ scale: 1.08, boxShadow: "0 0 25px rgba(212,175,55,0.4)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={scrollToTop}
+          id="landing-back-to-top-btn"
+          aria-label="Back to top"
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#12141a]/90 border border-amber-500/35 text-amber-300 backdrop-blur-md shadow-2xl text-xs font-bold cursor-pointer transition-all hover:bg-stone-800"
+        >
+          <ArrowUp className="w-4 h-4 text-amber-400" aria-hidden="true" />
+          <span className="hidden sm:inline">Back to Top</span>
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 }

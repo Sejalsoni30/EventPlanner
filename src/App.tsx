@@ -85,6 +85,7 @@ export default function App() {
         apiKey={apiKey}
         onApiKeyChange={setApiKey}
         initialEventType={selectedEventType}
+        onBack={() => setStep("landing")}
       />
     );
   }

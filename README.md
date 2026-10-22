@@ -4,7 +4,7 @@
 <div align="center">
 
 [![AI Code Evaluation](https://img.shields.io/badge/AI_Code_Score-91.47%2F100-success?style=for-the-badge&logo=google&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
-[![Tests Passing](https://img.shields.io/badge/Vitest-80%2F80_Passed_(100%25)-brightgreen?style=for-the-badge&logo=vitest&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
+[![Tests Passing](https://img.shields.io/badge/Vitest-81%2F81_Passed_(100%25)-brightgreen?style=for-the-badge&logo=vitest&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
 [![Accessibility](https://img.shields.io/badge/Accessibility-98%2F100_WCAG_2.1_AA-blueviolet?style=for-the-badge&logo=w3c&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
 [![Security](https://img.shields.io/badge/Security-95%2F100-00C7B7?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
@@ -45,7 +45,7 @@ Built with **React 19**, **TypeScript 6**, and **Tailwind CSS v4**, the applicat
 | 🌐 **Live Web Application** | [sejalsoni30.github.io/EventPlanner](https://sejalsoni30.github.io/EventPlanner/) | Deployed production build on GitHub Pages |
 | 🎬 **Demo Video Walkthrough** | [Google Drive Video Demo](https://drive.google.com/file/d/1OebwLDdS-MnmgkcDqt8URBZzvurPQh7j/view?usp=drive_link) | High-definition screen recording of the complete workflow |
 | 📦 **Source Repository** | [github.com/Sejalsoni30/EventPlanner](https://github.com/Sejalsoni30/EventPlanner.git) | Complete codebase, unit tests, and configs |
-| 🧪 **Test Suite Status** | `npm test` (80/80 passing) | Vitest + React Testing Library test suite |
+| 🧪 **Test Suite Status** | `npm test` (81/81 passing) | Vitest + React Testing Library test suite |
 
 ---
 

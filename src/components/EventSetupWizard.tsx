@@ -15,6 +15,7 @@ import {
   Info,
   Check,
   Wand2,
+  ArrowLeft,
 } from "lucide-react";
 
 const EVENT_TYPES: EventType[] = [
@@ -190,6 +191,7 @@ interface Props {
   apiKey: string;
   onApiKeyChange: (key: string) => void;
   initialEventType?: EventType;
+  onBack?: () => void;
 }
 
 const defaultForm: EventFormData = {
@@ -211,6 +213,7 @@ export default function EventSetupWizard({
   apiKey,
   onApiKeyChange,
   initialEventType,
+  onBack,
 }: Props) {
   const [form, setForm] = useState<EventFormData>(() => ({
     ...defaultForm,
@@ -318,6 +321,27 @@ export default function EventSetupWizard({
       </div>
 
       <div className="relative w-full max-w-2xl my-6">
+        {/* Top Back Navigation Bar */}
+        {onBack && (
+          <div className="flex items-center justify-between mb-5 px-1">
+            <motion.button
+              whileHover={{ scale: 1.04, x: -3 }}
+              whileTap={{ scale: 0.96 }}
+              type="button"
+              onClick={onBack}
+              id="wizard-top-back-btn"
+              aria-label="Back to showcase"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-amber-500/25 hover:border-amber-500/50 text-stone-300 hover:text-amber-200 text-xs font-semibold backdrop-blur-md transition-all shadow-lg shadow-black/40 group cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
+              <span>Back to Showcase</span>
+            </motion.button>
+            <span className="text-[11px] text-stone-500 font-sans tracking-wide">
+              Step <strong className="text-amber-300">{step}</strong> of {totalSteps}
+            </span>
+          </div>
+        )}
+
         {/* Header Bar */}
         <div className="text-center mb-6">
           <div className="flex items-center justify-center mb-3">
@@ -786,9 +810,23 @@ export default function EventSetupWizard({
                 whileTap={{ scale: 0.98 }}
                 type="button"
                 onClick={handleBack}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-purple-500"
+                id="wizard-bottom-back-step-btn"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/15 hover:border-white/30 text-stone-300 hover:bg-white/10 hover:text-white text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer"
               >
+                <ArrowLeft className="w-4 h-4 text-stone-400" aria-hidden="true" />
                 Back
+              </motion.button>
+            ) : onBack ? (
+              <motion.button
+                whileHover={{ x: -2 }}
+                whileTap={{ scale: 0.98 }}
+                type="button"
+                onClick={onBack}
+                id="wizard-bottom-back-home-btn"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-amber-500/25 hover:border-amber-500/50 text-stone-300 hover:bg-white/10 hover:text-amber-300 text-sm font-medium transition-all focus:outline-none cursor-pointer group"
+              >
+                <ArrowLeft className="w-4 h-4 text-amber-400 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
+                Back to Showcase
               </motion.button>
             ) : (
               <div />

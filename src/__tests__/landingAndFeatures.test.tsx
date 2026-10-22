@@ -10,6 +10,7 @@ import GiftRegistry from "../components/GiftRegistry";
 import InviteSender from "../components/InviteSender";
 import SeatingBuilder from "../components/SeatingBuilder";
 import MultiDayPlanner from "../components/MultiDayPlanner";
+import EventSetupWizard from "../components/EventSetupWizard";
 import type { VendorScript } from "../types";
 
 // Mock canvas-confetti
@@ -206,3 +207,26 @@ describe("MultiDayPlanner Component", () => {
     expect(screen.getByText("Add Day")).toBeInTheDocument();
   });
 });
+
+describe("EventSetupWizard Back Navigation", () => {
+  it("renders attractive top and bottom back buttons and calls onBack when clicked", () => {
+    const onBack = vi.fn();
+    render(
+      <EventSetupWizard
+        onSubmit={vi.fn()}
+        isGenerating={false}
+        apiKey=""
+        onApiKeyChange={vi.fn()}
+        onBack={onBack}
+      />
+    );
+
+    const backBtns = screen.getAllByRole("button", { name: /back to showcase/i });
+    expect(backBtns.length).toBe(2);
+    fireEvent.click(backBtns[0]);
+    expect(onBack).toHaveBeenCalledTimes(1);
+    fireEvent.click(backBtns[1]);
+    expect(onBack).toHaveBeenCalledTimes(2);
+  });
+});
+
