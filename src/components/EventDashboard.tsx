@@ -9,6 +9,14 @@ import VendorScripts from "./VendorScripts";
 import VenueMap from "./VenueMap";
 import InvitationCardModal from "./InvitationCardModal";
 import { CelebrateLogo } from "./CelebrateLogo";
+import CountdownTimer from "./CountdownTimer";
+import WeatherWidget from "./WeatherWidget";
+import RSVPTracker from "./RSVPTracker";
+import MoodBoard from "./MoodBoard";
+import GiftRegistry from "./GiftRegistry";
+import InviteSender from "./InviteSender";
+import SeatingBuilder from "./SeatingBuilder";
+import MultiDayPlanner from "./MultiDayPlanner";
 import {
   Sparkles,
   RefreshCw,
@@ -255,6 +263,51 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
           <div className="space-y-6">
             <ChecklistBoard milestones={milestones} onUpdate={onMilestonesUpdate} />
             <VendorScripts scripts={vendorScripts} />
+          </div>
+
+          {/* ═══════════════════════════════════════════════════════════════
+              NEW FEATURE MODULES — 8 Enhanced Planning Tools
+              ═══════════════════════════════════════════════════════════════ */}
+          <div className="pt-6 border-t border-white/8">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
+              <span className="flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border border-amber-500/25 rounded-full text-xs font-bold text-amber-300 uppercase tracking-widest">
+                <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+                Enhanced Planning Suite
+              </span>
+              <span className="h-px flex-1 bg-gradient-to-l from-transparent via-amber-500/30 to-transparent" />
+            </div>
+
+            <div className="space-y-6">
+              {/* Row 1: Countdown + Weather */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <CountdownTimer eventDate={formData.eventDate} eventName={formData.eventName} />
+                <WeatherWidget eventDate={formData.eventDate} venue={currentVenue} />
+              </div>
+
+              {/* Row 2: RSVP + Mood Board */}
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                <RSVPTracker guestCount={formData.guestCount} />
+                <MoodBoard theme={formData.theme} eventType={formData.eventType} />
+              </div>
+
+              {/* Row 3: Gift Registry + Invite Sender */}
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                <GiftRegistry currency={formData.currency} />
+                <InviteSender
+                  scripts={vendorScripts}
+                  eventName={formData.eventName}
+                  eventDate={formData.eventDate}
+                  venue={currentVenue}
+                />
+              </div>
+
+              {/* Row 4: Seating Builder (full width) */}
+              <SeatingBuilder totalGuests={formData.guestCount} />
+
+              {/* Row 5: Multi-Day Planner (full width) */}
+              <MultiDayPlanner startDate={formData.eventDate} />
+            </div>
           </div>
         </main>
 
