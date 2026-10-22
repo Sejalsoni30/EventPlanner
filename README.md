@@ -4,7 +4,7 @@
 <div align="center">
 
 [![AI Code Evaluation](https://img.shields.io/badge/AI_Code_Score-91.47%2F100-success?style=for-the-badge&logo=google&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
-[![Tests Passing](https://img.shields.io/badge/Vitest-64%2F64_Passed_(100%25)-brightgreen?style=for-the-badge&logo=vitest&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
+[![Tests Passing](https://img.shields.io/badge/Vitest-80%2F80_Passed_(100%25)-brightgreen?style=for-the-badge&logo=vitest&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
 [![Accessibility](https://img.shields.io/badge/Accessibility-98%2F100_WCAG_2.1_AA-blueviolet?style=for-the-badge&logo=w3c&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
 [![Security](https://img.shields.io/badge/Security-95%2F100-00C7B7?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/Sejalsoni30/EventPlanner)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
@@ -45,7 +45,7 @@ Built with **React 19**, **TypeScript 6**, and **Tailwind CSS v4**, the applicat
 | 🌐 **Live Web Application** | [sejalsoni30.github.io/EventPlanner](https://sejalsoni30.github.io/EventPlanner/) | Deployed production build on GitHub Pages |
 | 🎬 **Demo Video Walkthrough** | [Google Drive Video Demo](https://drive.google.com/file/d/1OebwLDdS-MnmgkcDqt8URBZzvurPQh7j/view?usp=drive_link) | High-definition screen recording of the complete workflow |
 | 📦 **Source Repository** | [github.com/Sejalsoni30/EventPlanner](https://github.com/Sejalsoni30/EventPlanner.git) | Complete codebase, unit tests, and configs |
-| 🧪 **Test Suite Status** | `npm test` (64/64 passing) | Vitest + React Testing Library test suite |
+| 🧪 **Test Suite Status** | `npm test` (80/80 passing) | Vitest + React Testing Library test suite |
 
 ---
 
@@ -69,15 +69,23 @@ CelebrateAI brings end-to-end event orchestration into a unified, reactive inter
 
 ## ✨ Core Features & Architectural Highlights
 
+### 🌟 0. Immersive Animated Landing Page & Showcase
+- **Floating Gold Particle Engine**: 60 dynamic ambient particles simulating stardust with custom randomized trajectories, delays, and opacity envelopes.
+- **Auto-Cycling Event Spotlight**: Real-time badge cycling through 6 celebration categories with coordinated neon glow pulses.
+- **Interactive Browser Mock**: High-fidelity dark mode preview featuring live budget progress meters, responsive stat cards, and animated feature badges.
+- **Animated Counter Metrics**: IntersectionObserver-driven counters animating up to 10,000+ events and 98% satisfaction.
+- **Interactive Video Modal**: Direct deep link to the Google Drive HD video walkthrough.
+- **Golden Confetti Celebration Launch**: Satisfying canvas-confetti particle burst upon initiating planning.
+
 ### 🧙‍♂️ 1. 3-Step Guided Event Setup Wizard
-- **Step 1: Event Identity**: Event type selection across 6 categories (*Birthday, Wedding, Corporate Gala, College Fest, Anniversary, Tech Conference*), venue location, and future-date verification.
+- **Step 1: Event Identity**: Event type selection across 6 categories (*Birthday, Wedding, Corporate Gala, College Fest, Anniversary, Tech Conference*), venue location, and future-date verification. Pre-selects category directly from landing page showcase.
 - **Step 2: Capacity & Atmosphere**: Dynamic guest volume slider (1 to 100,000), multi-currency financial input (INR ₹ / USD $), and curated aesthetics (*Boho Chic, Minimalist Tech, Royal Indian, Retro Glam, Black Tie Formal*, etc.).
 - **Step 3: Review & Synthesis**: Real-time summary review with optional BYOK (Bring Your Own Key) Gemini field.
 
 ### ⚡ 2. One-Click Interactive Demo Presets
 Instant one-click evaluation presets pre-load realistic scenarios:
 - 💍 **Royal Wedding**: *Aarav & Maya's Royal Heritage Wedding* (₹25,00,000 budget, 350 guests, Royal Indian theme, Umaid Bhawan Palace).
-- 💻 **AI Summit**: *Nexus Global AI Summit 2027* ($150,000 budget, 650 guests, Minimalist Tech theme, Moscone Center).
+- 💻 **AI Summit**: *Nexus Global AI Summit 2027* ($150,00,000 budget, 650 guests, Minimalist Tech theme, Moscone Center).
 - 🎂 **Neon Birthday**: *Aanya's 30th Neon Retro Gala* (₹3,50,000 budget, 75 guests, Retro Glam theme, Skyline Rooftop).
 
 ### 💰 3. Smart Deterministic Budget Allocator
@@ -117,6 +125,38 @@ Instant one-click evaluation presets pre-load realistic scenarios:
   - 📱 **Dietary & RSVP Follow-up** (WhatsApp)
   - 💼 **Vendor Scope & Rate Negotiation** (Email)
   - 🙏 **Post-Event Appreciation Note** (Email)
+
+### ⏱️ 9. Real-Time Countdown Timer
+- High-precision countdown ticker rendering Days, Hours, Minutes, and Seconds until event commencement.
+- Target date synchronization with celebration badge styling.
+
+### 🌤️ 10. Venue Weather Forecast Widget
+- Microclimate intelligence reporting temperature, conditions, humidity percentage, wind speed, and precipitation likelihood.
+- Automated outdoor event suitability advisory tag.
+
+### 👥 11. RSVP & Guest Management System
+- Complete attendee roster tracking guest names, dietary requirements (Vegan, Jain, Gluten-Free, Halal, None), and +1 accompaniments.
+- Interactive status toggle (`Confirmed`, `Pending`, `Declined`) with live per-category counts and search filter.
+
+### 🎨 12. Curated Mood Board & Aesthetic Palette Studio
+- Event-tailored hex swatches with Primary, Secondary, and Accent styling roles.
+- Curated decor accents, lighting specifications, and attire aesthetic guidelines.
+
+### 🎁 13. Digital Gift Registry & Wishlist
+- Curated registry tracker with item valuations, store vendor attribution, and real-time claim toggles.
+- Financial total summary calculation and claimed percentage progress bar.
+
+### ✉️ 14. Smart Invite Dispatcher
+- Ready-to-send copyable templates tailored for WhatsApp broadcasts, Email invitations, and SMS reminders.
+- One-click clipboard copy with animated visual confirmation.
+
+### 🪑 15. Interactive Seating Chart Builder
+- Dynamic banquet layout configurator supporting Round and Rectangular tables.
+- Table capacity limits, visual assigned seating counter, and one-click table addition.
+
+### 📅 16. Multi-Day Event Itinerary Orchestrator
+- Multi-day celebration scheduler (Day 1: Welcome & Sangeet / Check-in; Day 2: Main Ceremony & Gala; Day 3: Farewell Brunch).
+- Add custom events with time, location, and dress code tags.
 
 ---
 

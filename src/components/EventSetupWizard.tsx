@@ -189,6 +189,7 @@ interface Props {
   isGenerating: boolean;
   apiKey: string;
   onApiKeyChange: (key: string) => void;
+  initialEventType?: EventType;
 }
 
 const defaultForm: EventFormData = {
@@ -209,8 +210,12 @@ export default function EventSetupWizard({
   isGenerating,
   apiKey,
   onApiKeyChange,
+  initialEventType,
 }: Props) {
-  const [form, setForm] = useState<EventFormData>({ ...defaultForm });
+  const [form, setForm] = useState<EventFormData>(() => ({
+    ...defaultForm,
+    ...(initialEventType ? { eventType: initialEventType } : {}),
+  }));
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [step, setStep] = useState(1);
   const [visitedSteps, setVisitedSteps] = useState<Set<number>>(new Set([1]));

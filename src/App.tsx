@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import type { EventFormData, EventPlan, GuestMilestone, AppStep } from "./types";
+import type { EventFormData, EventPlan, GuestMilestone, AppStep, EventType } from "./types";
 import { calculateBudgetDistribution } from "./utils/budgetCalculator";
 import { generateEventContent } from "./utils/aiGenerator";
 import { generateDefaultMilestones } from "./utils/milestoneUtils";
@@ -10,9 +10,15 @@ import LoadingScreen from "./components/LoadingScreen";
 
 export default function App() {
   const [step, setStep] = useState<AppStep>("landing");
+  const [selectedEventType, setSelectedEventType] = useState<EventType | undefined>(undefined);
   const [eventPlan, setEventPlan] = useState<EventPlan | null>(null);
   const [pendingFormData, setPendingFormData] = useState<EventFormData | null>(null);
   const [apiKey, setApiKey] = useState<string>("");
+
+  const handleStartWizard = useCallback((eventType?: EventType) => {
+    setSelectedEventType(eventType);
+    setStep("wizard");
+  }, []);
 
   const handleFormSubmit = useCallback(async (formData: EventFormData) => {
     setStep("generating");
@@ -48,6 +54,7 @@ export default function App() {
 
   const handleReset = useCallback(() => {
     setStep("landing");
+    setSelectedEventType(undefined);
     setEventPlan(null);
     setPendingFormData(null);
   }, []);
@@ -77,9 +84,10 @@ export default function App() {
         isGenerating={false}
         apiKey={apiKey}
         onApiKeyChange={setApiKey}
+        initialEventType={selectedEventType}
       />
     );
   }
 
-  return <LandingPage onGetStarted={() => setStep("wizard")} />;
+  return <LandingPage onGetStarted={handleStartWizard} />;
 }

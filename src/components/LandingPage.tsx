@@ -7,8 +7,11 @@ import {
   ChevronDown, Play, Check,
 } from "lucide-react";
 
+import confetti from "canvas-confetti";
+import type { EventType } from "../types";
+
 interface Props {
-  onGetStarted: () => void;
+  onGetStarted: (eventType?: EventType) => void;
 }
 
 // ─── FLOATING PARTICLE SYSTEM ───────────────────────────────────────────────
@@ -60,6 +63,10 @@ function AnimatedCounter({ to, suffix = "" }: { to: number; suffix?: string }) {
   const [started, setStarted] = useState(false);
 
   useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") {
+      setStarted(true);
+      return;
+    }
     const observer = new IntersectionObserver(([e]) => {
       if (e.isIntersecting && !started) setStarted(true);
     }, { threshold: 0.5 });
@@ -137,6 +144,22 @@ export default function LandingPage({ onGetStarted }: Props) {
 
   const current = EVENT_TYPES[activeEventType];
 
+  const handleLaunch = (eventType?: EventType) => {
+    try {
+      confetti({
+        particleCount: 60,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#d4af37", "#f59e0b", "#fbbf24", "#ffffff", "#10b981", "#38bdf8"],
+      });
+    } catch {
+      // Non-blocking fallback
+    }
+    setTimeout(() => {
+      onGetStarted(eventType);
+    }, 250);
+  };
+
   return (
     <div ref={containerRef} className="min-h-screen bg-[#080a0f] text-stone-100 overflow-x-hidden">
       <Particles />
@@ -170,7 +193,7 @@ export default function LandingPage({ onGetStarted }: Props) {
         <motion.button
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
-          onClick={onGetStarted}
+          onClick={() => handleLaunch()}
           id="nav-get-started-btn"
           aria-label="Start planning your event"
           className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 font-bold rounded-xl text-sm shadow-lg shadow-amber-600/25 cursor-pointer transition-all"
@@ -258,7 +281,7 @@ export default function LandingPage({ onGetStarted }: Props) {
           <motion.button
             whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(212,175,55,0.4)" }}
             whileTap={{ scale: 0.97 }}
-            onClick={onGetStarted}
+            onClick={() => handleLaunch()}
             id="hero-get-started-btn"
             aria-label="Start planning your perfect event"
             className="group flex items-center gap-3 px-8 py-4 rounded-2xl font-extrabold text-lg text-stone-950 cursor-pointer transition-all shadow-2xl shadow-amber-600/30"
@@ -293,7 +316,7 @@ export default function LandingPage({ onGetStarted }: Props) {
           transition={{ delay: 0.7, duration: 0.8 }}
           className="flex flex-wrap items-center justify-center gap-6 text-xs text-stone-500"
         >
-          {["✅ No credit card required", "✅ Setup in 60 seconds", "✅ Works without API key", "✅ 64/64 tests passing"].map((badge) => (
+          {["✅ No credit card required", "✅ Setup in 60 seconds", "✅ Works without API key", "✅ 80/80 tests passing"].map((badge) => (
             <span key={badge} className="font-medium">{badge}</span>
           ))}
         </motion.div>
@@ -518,7 +541,7 @@ export default function LandingPage({ onGetStarted }: Props) {
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ scale: 1.04, y: -4 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={onGetStarted}
+                onClick={() => handleLaunch(et.label as EventType)}
                 aria-label={`Plan a ${et.label} event`}
                 className="relative group flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border cursor-pointer transition-all overflow-hidden"
                 style={{
@@ -634,7 +657,7 @@ export default function LandingPage({ onGetStarted }: Props) {
             <motion.button
               whileHover={{ scale: 1.06, boxShadow: "0 0 60px rgba(212,175,55,0.5)" }}
               whileTap={{ scale: 0.97 }}
-              onClick={onGetStarted}
+              onClick={() => handleLaunch()}
               id="cta-final-btn"
               aria-label="Start planning your event for free"
               className="group inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-extrabold text-xl text-stone-950 cursor-pointer shadow-2xl"
@@ -696,15 +719,26 @@ export default function LandingPage({ onGetStarted }: Props) {
               className="bg-stone-900 border border-white/10 rounded-3xl p-8 max-w-lg w-full text-center cursor-default shadow-2xl"
             >
               <div className="text-6xl mb-4">🎬</div>
-              <h3 className="text-xl font-bold text-white mb-2">Demo Video Coming Soon</h3>
-              <p className="text-stone-400 text-sm mb-6">Watch a full walkthrough of CelebrateAI in action. Until then, try the live demo below!</p>
+              <h3 className="text-xl font-bold text-white mb-2">CelebrateAI Product Walkthrough</h3>
+              <p className="text-stone-400 text-sm mb-6">
+                Watch the full HD walkthrough of CelebrateAI orchestrating weddings, corporate summits, deterministic budgets, hourly timelines, and invitations.
+              </p>
               <div className="flex gap-3 justify-center flex-wrap">
-                <button
-                  onClick={() => { setShowVideoPlaceholder(false); onGetStarted(); }}
-                  className="px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 font-bold rounded-xl cursor-pointer"
-                  aria-label="Try live demo"
+                <a
+                  href="https://drive.google.com/file/d/1OebwLDdS-MnmgkcDqt8URBZzvurPQh7j/view?usp=drive_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 font-bold rounded-xl cursor-pointer inline-flex items-center gap-2 hover:brightness-110 transition-all shadow-lg shadow-amber-600/30"
                 >
-                  Try Live Demo
+                  <Play className="w-4 h-4 fill-stone-950" />
+                  Watch Video on Google Drive ↗
+                </a>
+                <button
+                  onClick={() => { setShowVideoPlaceholder(false); handleLaunch(); }}
+                  className="px-6 py-3 bg-white/10 text-white font-bold rounded-xl cursor-pointer hover:bg-white/15"
+                  aria-label="Launch app now"
+                >
+                  Launch App Now
                 </button>
                 <button
                   onClick={() => setShowVideoPlaceholder(false)}
