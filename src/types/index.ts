@@ -93,4 +93,4 @@ export interface ValidationError {
   message: string;
 }
 
-export type AppStep = "wizard" | "generating" | "dashboard";
+export type AppStep = "landing" | "wizard" | "generating" | "dashboard";

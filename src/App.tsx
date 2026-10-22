@@ -3,12 +3,13 @@ import type { EventFormData, EventPlan, GuestMilestone, AppStep } from "./types"
 import { calculateBudgetDistribution } from "./utils/budgetCalculator";
 import { generateEventContent } from "./utils/aiGenerator";
 import { generateDefaultMilestones } from "./utils/milestoneUtils";
+import LandingPage from "./components/LandingPage";
 import EventSetupWizard from "./components/EventSetupWizard";
 import EventDashboard from "./components/EventDashboard";
 import LoadingScreen from "./components/LoadingScreen";
 
 export default function App() {
-  const [step, setStep] = useState<AppStep>("wizard");
+  const [step, setStep] = useState<AppStep>("landing");
   const [eventPlan, setEventPlan] = useState<EventPlan | null>(null);
   const [pendingFormData, setPendingFormData] = useState<EventFormData | null>(null);
   const [apiKey, setApiKey] = useState<string>("");
@@ -46,7 +47,7 @@ export default function App() {
   }, [apiKey]);
 
   const handleReset = useCallback(() => {
-    setStep("wizard");
+    setStep("landing");
     setEventPlan(null);
     setPendingFormData(null);
   }, []);
@@ -69,12 +70,16 @@ export default function App() {
     );
   }
 
-  return (
-    <EventSetupWizard
-      onSubmit={handleFormSubmit}
-      isGenerating={false}
-      apiKey={apiKey}
-      onApiKeyChange={setApiKey}
-    />
-  );
+  if (step === "wizard") {
+    return (
+      <EventSetupWizard
+        onSubmit={handleFormSubmit}
+        isGenerating={false}
+        apiKey={apiKey}
+        onApiKeyChange={setApiKey}
+      />
+    );
+  }
+
+  return <LandingPage onGetStarted={() => setStep("wizard")} />;
 }
