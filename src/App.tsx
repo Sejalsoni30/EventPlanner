@@ -7,6 +7,7 @@ import LandingPage from "./components/LandingPage";
 import EventSetupWizard from "./components/EventSetupWizard";
 import EventDashboard from "./components/EventDashboard";
 import LoadingScreen from "./components/LoadingScreen";
+import { ThemeProvider } from "./context/ThemeContext";
 
 export default function App() {
   const [step, setStep] = useState<AppStep>("landing");
@@ -63,32 +64,27 @@ export default function App() {
     setEventPlan((prev) => prev ? { ...prev, milestones } : prev);
   }, []);
 
-  if (step === "generating") {
-    return <LoadingScreen eventName={pendingFormData?.eventName} />;
-  }
-
-  if (step === "dashboard" && eventPlan) {
-    return (
-      <EventDashboard
-        plan={eventPlan}
-        onReset={handleReset}
-        onMilestonesUpdate={handleMilestonesUpdate}
-      />
-    );
-  }
-
-  if (step === "wizard") {
-    return (
-      <EventSetupWizard
-        onSubmit={handleFormSubmit}
-        isGenerating={false}
-        apiKey={apiKey}
-        onApiKeyChange={setApiKey}
-        initialEventType={selectedEventType}
-        onBack={() => setStep("landing")}
-      />
-    );
-  }
-
-  return <LandingPage onGetStarted={handleStartWizard} />;
+  return (
+    <ThemeProvider>
+      {step === "generating" && <LoadingScreen eventName={pendingFormData?.eventName} />}
+      {step === "dashboard" && eventPlan && (
+        <EventDashboard
+          plan={eventPlan}
+          onReset={handleReset}
+          onMilestonesUpdate={handleMilestonesUpdate}
+        />
+      )}
+      {step === "wizard" && (
+        <EventSetupWizard
+          onSubmit={handleFormSubmit}
+          isGenerating={false}
+          apiKey={apiKey}
+          onApiKeyChange={setApiKey}
+          initialEventType={selectedEventType}
+          onBack={() => setStep("landing")}
+        />
+      )}
+      {step === "landing" && <LandingPage onGetStarted={handleStartWizard} />}
+    </ThemeProvider>
+  );
 }

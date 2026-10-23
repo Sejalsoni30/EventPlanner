@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { EventPlan, GuestMilestone, EventType } from "../types";
+import type { EventPlan, GuestMilestone, EventType, WorkspaceMode } from "../types";
 import { formatCurrency } from "../utils/budgetCalculator";
 import BudgetBreakdown from "./BudgetBreakdown";
 import ItineraryTimeline from "./ItineraryTimeline";
@@ -17,6 +17,8 @@ import GiftRegistry from "./GiftRegistry";
 import InviteSender from "./InviteSender";
 import SeatingBuilder from "./SeatingBuilder";
 import MultiDayPlanner from "./MultiDayPlanner";
+import GuestCelebrationPortal from "./GuestCelebrationPortal";
+import ThemeToggle from "./ThemeToggle";
 import {
   Sparkles,
   RefreshCw,
@@ -28,6 +30,7 @@ import {
   Mail,
   Home,
   ArrowUp,
+  Crown,
 } from "lucide-react";
 
 interface Props {
@@ -92,6 +95,7 @@ const EVENT_TYPE_THEMES: Record<
 };
 
 export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Props) {
+  const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("organizer");
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [currentVenue, setCurrentVenue] = useState(plan.formData.venue || "The Grand Ballroom");
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -126,7 +130,7 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Top Navbar */}
-        <nav className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 mb-6 sm:mb-8 pb-4 border-b border-white/10" aria-label="Dashboard navigation">
+        <nav className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8 pb-4 border-b border-white/10" aria-label="Dashboard navigation">
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
             <CelebrateLogo size={34} />
             <div className="min-w-0">
@@ -139,7 +143,47 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
             </div>
           </div>
 
+          {/* Segmented Dual Mode Switcher (Organizer vs Guest Mode) */}
+          <div
+            role="tablist"
+            aria-label="Dashboard experience modes"
+            className="flex items-center p-1 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md shadow-inner"
+          >
+            <button
+              role="tab"
+              aria-selected={workspaceMode === "organizer"}
+              onClick={() => setWorkspaceMode("organizer")}
+              id="mode-organizer-btn"
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                workspaceMode === "organizer"
+                  ? "bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 shadow-md shadow-amber-600/25"
+                  : "text-stone-300 hover:text-white"
+              }`}
+            >
+              <Crown className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Organizer Mode</span>
+            </button>
+
+            <button
+              role="tab"
+              aria-selected={workspaceMode === "guest"}
+              onClick={() => setWorkspaceMode("guest")}
+              id="mode-guest-btn"
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                workspaceMode === "guest"
+                  ? "bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 shadow-md shadow-amber-600/25"
+                  : "text-stone-300 hover:text-white"
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Guest Mode</span>
+            </button>
+          </div>
+
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-auto sm:ml-0">
+            {/* Theme Toggle Button (Light/Dark Mode) */}
+            <ThemeToggle showLabel={false} />
+
             {/* Export & Invitation Button */}
             <button
               onClick={handleExportClick}
@@ -164,152 +208,202 @@ export default function EventDashboard({ plan, onReset, onMilestonesUpdate }: Pr
           </div>
         </nav>
 
-        {/* Hero Banner with Human-Made Editorial Styling */}
-        <header
-          className={`relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-3xl p-6 sm:p-8 mb-8 backdrop-blur-2xl shadow-2xl overflow-hidden`}
-          aria-label="Event overview"
-        >
-          <div className="relative z-10">
-            <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
-              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${theme.badge} backdrop-blur-md`}>
-                <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                Handcrafted Celebration Blueprint
-              </span>
+        {/* Mode Indicator Banner */}
+        <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-2.5 mb-6 rounded-2xl bg-white/5 border border-amber-500/20 backdrop-blur-md">
+          <div className="flex items-center gap-2.5 text-xs sm:text-sm text-stone-200">
+            <span className="p-1 rounded-lg bg-amber-500/20 text-amber-300 shrink-0">
+              {workspaceMode === "organizer" ? <Crown className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+            </span>
+            <span>
+              {workspaceMode === "organizer"
+                ? "👑 Organizer Master Mode: Financial breakdown, hourly operations, vendor negotiation scripts & seating logistics."
+                : "🥂 Guest Celebration Mode: Interactive attendee portal with live RSVP, celebration timeline, gift registry & digital pass."}
+            </span>
+          </div>
 
-              {/* Quick Card Trigger */}
-              <button
-                onClick={() => setIsInvitationOpen(true)}
-                className="text-xs text-amber-300 hover:text-amber-200 font-semibold flex items-center gap-1.5 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full transition-all cursor-pointer"
+          <button
+            onClick={() => setWorkspaceMode(workspaceMode === "organizer" ? "guest" : "organizer")}
+            className="text-xs font-bold text-amber-300 hover:text-amber-200 underline underline-offset-4 shrink-0 cursor-pointer hidden sm:inline"
+          >
+            Switch to {workspaceMode === "organizer" ? "Guest Mode" : "Organizer Mode"} →
+          </button>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════════
+            CONDITIONAL WORKSPACE MODES: ORGANIZER vs GUEST
+            ═══════════════════════════════════════════════════════════════ */}
+        <AnimatePresence mode="wait">
+          {workspaceMode === "organizer" ? (
+            <motion.div
+              key="organizer-workspace"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+              className="space-y-6"
+            >
+              {/* Hero Banner with Human-Made Editorial Styling */}
+              <header
+                className={`relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-3xl p-6 sm:p-8 mb-8 backdrop-blur-2xl shadow-2xl overflow-hidden`}
+                aria-label="Event overview"
               >
-                <span>Preview Invitation Card</span>
-                <span>→</span>
-              </button>
-            </div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${theme.badge} backdrop-blur-md`}>
+                      <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+                      Handcrafted Celebration Blueprint
+                    </span>
 
-            <h1 className="text-3xl sm:text-5xl font-editorial font-bold text-white mb-2 tracking-wide leading-tight">
-              {formData.eventName}
-            </h1>
+                    {/* Quick Card Trigger */}
+                    <button
+                      onClick={() => setIsInvitationOpen(true)}
+                      className="text-xs text-amber-300 hover:text-amber-200 font-semibold flex items-center gap-1.5 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full transition-all cursor-pointer"
+                    >
+                      <span>Preview Invitation Card</span>
+                      <span>→</span>
+                    </button>
+                  </div>
 
-            <p className="text-stone-300 mb-6 flex items-center gap-2 flex-wrap text-sm sm:text-base font-medium">
-              <span className="text-amber-200">{formData.eventType}</span>
-              {currentVenue && (
-                <>
-                  <span className="text-stone-500">•</span>
-                  <span className="inline-flex items-center gap-1.5 text-stone-200">
-                    <MapPin className="w-4 h-4 text-amber-400" aria-hidden="true" />
-                    {currentVenue}
-                  </span>
-                </>
-              )}
-            </p>
+                  <h1 className="text-3xl sm:text-5xl font-editorial font-bold text-white mb-2 tracking-wide leading-tight">
+                    {formData.eventName}
+                  </h1>
 
-            {/* Key Metric Stat Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-              <StatCard
-                icon={<Calendar className="w-4 h-4" />}
-                label="Date"
-                value={new Date(formData.eventDate).toLocaleDateString("en-IN", {
-                  day: "2-digit",
-                  month: "short",
-                  year: "numeric",
-                })}
-              />
-              <StatCard
-                icon={<Users className="w-4 h-4" />}
-                label="Guests"
-                value={`${formData.guestCount.toLocaleString()} Attendees`}
-              />
-              <StatCard
-                icon={<Wallet className="w-4 h-4" />}
-                label="Total Budget"
-                value={formatCurrency(formData.budget, formData.currency)}
-              />
-              <StatCard
-                icon={<Palette className="w-4 h-4" />}
-                label="Vibe Theme"
-                value={formData.theme === "Custom" ? formData.customTheme ?? "Custom" : formData.theme}
-              />
-            </div>
-          </div>
-        </header>
+                  <p className="text-stone-300 mb-6 flex items-center gap-2 flex-wrap text-sm sm:text-base font-medium">
+                    <span className="text-amber-200">{formData.eventType}</span>
+                    {currentVenue && (
+                      <>
+                        <span className="text-stone-500">•</span>
+                        <span className="inline-flex items-center gap-1.5 text-stone-200">
+                          <MapPin className="w-4 h-4 text-amber-400" aria-hidden="true" />
+                          {currentVenue}
+                        </span>
+                      </>
+                    )}
+                  </p>
 
-        {/* Dashboard Main Widgets */}
-        <main className="space-y-6">
-          {/* Top Section: Smart Budget Allocator + Hourly Itinerary */}
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            {/* Left: Smart Budget Allocator */}
-            <div className="xl:col-span-1 space-y-6">
-              <BudgetBreakdown distribution={budgetDistribution} />
-            </div>
+                  {/* Key Metric Stat Cards */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <StatCard
+                      icon={<Calendar className="w-4 h-4" />}
+                      label="Date"
+                      value={new Date(formData.eventDate).toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    />
+                    <StatCard
+                      icon={<Users className="w-4 h-4" />}
+                      label="Guests"
+                      value={`${formData.guestCount.toLocaleString()} Attendees`}
+                    />
+                    <StatCard
+                      icon={<Wallet className="w-4 h-4" />}
+                      label="Total Budget"
+                      value={formatCurrency(formData.budget, formData.currency)}
+                    />
+                    <StatCard
+                      icon={<Palette className="w-4 h-4" />}
+                      label="Vibe Theme"
+                      value={formData.theme === "Custom" ? formData.customTheme ?? "Custom" : formData.theme}
+                    />
+                  </div>
+                </div>
+              </header>
 
-            {/* Right: Hourly Itinerary */}
-            <div className="xl:col-span-2 space-y-6">
-              <ItineraryTimeline
-                itinerary={itinerary}
-                eventName={formData.eventName}
-                eventDate={formData.eventDate}
-              />
-            </div>
-          </div>
+              {/* Dashboard Main Widgets */}
+              <main className="space-y-6">
+                {/* Top Section: Smart Budget Allocator + Hourly Itinerary */}
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                  {/* Left: Smart Budget Allocator */}
+                  <div className="xl:col-span-1 space-y-6">
+                    <BudgetBreakdown distribution={budgetDistribution} />
+                  </div>
 
-          {/* Place Map Location Section */}
-          <VenueMap
-            venue={currentVenue}
-            eventName={formData.eventName}
-            onUpdateVenue={(v) => setCurrentVenue(v)}
-          />
+                  {/* Right: Hourly Itinerary */}
+                  <div className="xl:col-span-2 space-y-6">
+                    <ItineraryTimeline
+                      itinerary={itinerary}
+                      eventName={formData.eventName}
+                      eventDate={formData.eventDate}
+                    />
+                  </div>
+                </div>
 
-          {/* Full Width Kanban & Communication Scripts */}
-          <div className="space-y-6">
-            <ChecklistBoard milestones={milestones} onUpdate={onMilestonesUpdate} />
-            <VendorScripts scripts={vendorScripts} />
-          </div>
-
-          {/* ═══════════════════════════════════════════════════════════════
-              NEW FEATURE MODULES — 8 Enhanced Planning Tools
-              ═══════════════════════════════════════════════════════════════ */}
-          <div className="pt-6 border-t border-white/8">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
-              <span className="flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border border-amber-500/25 rounded-full text-xs font-bold text-amber-300 uppercase tracking-widest">
-                <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                Enhanced Planning Suite
-              </span>
-              <span className="h-px flex-1 bg-gradient-to-l from-transparent via-amber-500/30 to-transparent" />
-            </div>
-
-            <div className="space-y-6">
-              {/* Row 1: Countdown + Weather */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <CountdownTimer eventDate={formData.eventDate} eventName={formData.eventName} />
-                <WeatherWidget eventDate={formData.eventDate} venue={currentVenue} />
-              </div>
-
-              {/* Row 2: RSVP + Mood Board */}
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                <RSVPTracker guestCount={formData.guestCount} />
-                <MoodBoard theme={formData.theme} eventType={formData.eventType} />
-              </div>
-
-              {/* Row 3: Gift Registry + Invite Sender */}
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                <GiftRegistry currency={formData.currency} />
-                <InviteSender
-                  scripts={vendorScripts}
-                  eventName={formData.eventName}
-                  eventDate={formData.eventDate}
+                {/* Place Map Location Section */}
+                <VenueMap
                   venue={currentVenue}
+                  eventName={formData.eventName}
+                  onUpdateVenue={(v) => setCurrentVenue(v)}
                 />
-              </div>
 
-              {/* Row 4: Seating Builder (full width) */}
-              <SeatingBuilder totalGuests={formData.guestCount} />
+                {/* Full Width Kanban & Communication Scripts */}
+                <div className="space-y-6">
+                  <ChecklistBoard milestones={milestones} onUpdate={onMilestonesUpdate} />
+                  <VendorScripts scripts={vendorScripts} />
+                </div>
 
-              {/* Row 5: Multi-Day Planner (full width) */}
-              <MultiDayPlanner startDate={formData.eventDate} />
-            </div>
-          </div>
-        </main>
+                {/* ═══════════════════════════════════════════════════════════════
+                    NEW FEATURE MODULES — 8 Enhanced Planning Tools
+                    ═══════════════════════════════════════════════════════════════ */}
+                <div className="pt-6 border-t border-white/8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
+                    <span className="flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border border-amber-500/25 rounded-full text-xs font-bold text-amber-300 uppercase tracking-widest">
+                      <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+                      Enhanced Planning Suite
+                    </span>
+                    <span className="h-px flex-1 bg-gradient-to-l from-transparent via-amber-500/30 to-transparent" />
+                  </div>
+
+                  <div className="space-y-6">
+                    {/* Row 1: Countdown + Weather */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <CountdownTimer eventDate={formData.eventDate} eventName={formData.eventName} />
+                      <WeatherWidget eventDate={formData.eventDate} venue={currentVenue} />
+                    </div>
+
+                    {/* Row 2: RSVP + Mood Board */}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                      <RSVPTracker guestCount={formData.guestCount} />
+                      <MoodBoard theme={formData.theme} eventType={formData.eventType} />
+                    </div>
+
+                    {/* Row 3: Gift Registry + Invite Sender */}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                      <GiftRegistry currency={formData.currency} />
+                      <InviteSender
+                        scripts={vendorScripts}
+                        eventName={formData.eventName}
+                        eventDate={formData.eventDate}
+                        venue={currentVenue}
+                      />
+                    </div>
+
+                    {/* Row 4: Seating Builder (full width) */}
+                    <SeatingBuilder totalGuests={formData.guestCount} />
+
+                    {/* Row 5: Multi-Day Planner (full width) */}
+                    <MultiDayPlanner startDate={formData.eventDate} />
+                  </div>
+                </div>
+              </main>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="guest-workspace"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+            >
+              <GuestCelebrationPortal
+                plan={{ ...plan, formData: { ...plan.formData, venue: currentVenue } }}
+                onOpenInvitation={() => setIsInvitationOpen(true)}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* ═══════════════════════════════════════════════════════════════
             GRAND "GO TO HOME PAGE" FINALE CARD (AT THE VERY LAST)

@@ -94,3 +94,5 @@ export interface ValidationError {
 }
 
 export type AppStep = "landing" | "wizard" | "generating" | "dashboard";
+
+export type WorkspaceMode = "organizer" | "guest";

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { CelebrateLogo } from "./CelebrateLogo";
+import { ThemeToggle } from "./ThemeToggle";
 import {
   Sparkles, ArrowRight, Star, Zap, Shield, Users, Calendar,
   Palette, BarChart3, MapPin, MessageSquare, Gift,
@@ -176,8 +177,7 @@ export default function LandingPage({ onGetStarted }: Props) {
       </div>
 
       {/* ─── NAVBAR ──────────────────────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 py-4"
-        style={{ background: "rgba(8,10,15,0.8)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 py-4 human-card border-b border-white/10"
         aria-label="Main navigation">
         <div className="flex items-center gap-2.5">
           <CelebrateLogo size={32} />
@@ -190,17 +190,20 @@ export default function LandingPage({ onGetStarted }: Props) {
           <a href="#events" className="hover:text-amber-300 transition-colors">Event Types</a>
           <a href="#testimonials" className="hover:text-amber-300 transition-colors">Reviews</a>
         </div>
-        <motion.button
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
-          onClick={() => handleLaunch()}
-          id="nav-get-started-btn"
-          aria-label="Start planning your event"
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 font-bold rounded-xl text-sm shadow-lg shadow-amber-600/25 cursor-pointer transition-all"
-        >
-          <Sparkles className="w-4 h-4" aria-hidden="true" />
-          Start Planning
-        </motion.button>
+        <div className="flex items-center gap-2.5">
+          <ThemeToggle />
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => handleLaunch()}
+            id="nav-get-started-btn"
+            aria-label="Start planning your event"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 font-bold rounded-xl text-sm shadow-lg shadow-amber-600/25 cursor-pointer transition-all"
+          >
+            <Sparkles className="w-4 h-4" aria-hidden="true" />
+            Start Planning
+          </motion.button>
+        </div>
       </nav>
 
       {/* ─── HERO SECTION ────────────────────────────────────────────────── */}

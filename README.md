@@ -164,6 +164,15 @@ Instant one-click evaluation presets pre-load realistic scenarios:
 - Multi-day celebration scheduler (Day 1: Welcome & Sangeet / Check-in; Day 2: Main Ceremony & Gala; Day 3: Farewell Brunch).
 - Add custom events with time, location, and dress code tags.
 
+### 🌓 17. Dual Theme Modes: Dark Mode & Light Mode
+- **Midnight Obsidian & Gold (Dark Mode)**: Signature luxury dark aesthetic with warm candlelight glow, dark glass cards, and gold foil borders.
+- **Ivory Champagne Elegance (Light Mode)**: Luminous porcelain palette (`#faf7f2`), warm amber border tokens, frosted white cards, and high-contrast charcoal typography designed for daytime planning.
+- **Persistent State**: Theme preference saved in `localStorage` with smooth CSS transitions across Landing Page, Setup Wizard, and Dashboard.
+
+### 👑 18. Dual Workspace Modes: Organizer vs Guest Mode
+- **👑 Organizer Master Mode**: Complete administrative command center for financial modeling, hourly vendor schedules, negotiation scripts, seating charts, and kanban milestone tracking.
+- **🥂 Guest Celebration Mode**: Dedicated attendee celebration hub featuring interactive RSVP submission, dietary preferences, personal wishes, 3D flippable digital invitation card, instant table seating finder, attendee timeline highlights, and gift registry wishing well.
+
 ---
 
 ## 🧠 AI Integration & System Architecture

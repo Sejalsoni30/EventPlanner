@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { EventFormData, EventType, Theme, Currency } from "../types";
 import { validateEventInput } from "../utils/budgetCalculator";
 import { CelebrateLogo } from "./CelebrateLogo";
+import { ThemeToggle } from "./ThemeToggle";
 import {
   Sparkles,
   Calendar,
@@ -321,9 +322,9 @@ export default function EventSetupWizard({
       </div>
 
       <div className="relative w-full max-w-2xl my-6">
-        {/* Top Back Navigation Bar */}
-        {onBack && (
-          <div className="flex items-center justify-between mb-5 px-1">
+        {/* Top Back Navigation Bar & Theme Toggle */}
+        <div className="flex items-center justify-between mb-5 px-1">
+          {onBack ? (
             <motion.button
               whileHover={{ scale: 1.04, x: -3 }}
               whileTap={{ scale: 0.96 }}
@@ -336,11 +337,14 @@ export default function EventSetupWizard({
               <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
               <span>Back to Showcase</span>
             </motion.button>
+          ) : <div />}
+          <div className="flex items-center gap-3">
             <span className="text-[11px] text-stone-500 font-sans tracking-wide">
               Step <strong className="text-amber-300">{step}</strong> of {totalSteps}
             </span>
+            <ThemeToggle />
           </div>
-        )}
+        </div>
 
         {/* Header Bar */}
         <div className="text-center mb-6">
